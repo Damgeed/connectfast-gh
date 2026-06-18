@@ -342,49 +342,92 @@
     }
 
     .pricing-table {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .pricing-card {
+      padding: 20px 18px;
+      border-radius: var(--radius-lg);
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-    .pricing-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
       cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
     }
-    .pricing-row:last-child { border-bottom: none; }
-    .pricing-row:hover { background: var(--accent-subtle); }
-    .pricing-row .plan-data {
-      font-size: 1.05rem;
+    .pricing-card:hover {
+      border-color: var(--accent-border);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .pricing-card .plan-gb {
+      font-size: 1.6rem;
+      font-weight: 800;
+      font-family: var(--display);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 2px;
+      color: var(--text);
+    }
+    .pricing-card .plan-gb .gb-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      vertical-align: super;
+    }
+    .pricing-card .plan-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+      line-height: 1.5;
+      flex: 1;
+    }
+    .pricing-card .plan-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+    .pricing-card .plan-price {
+      font-size: 1rem;
       font-weight: 700;
       font-family: var(--display);
     }
-    .pricing-row .plan-data .small { font-size: 0.75rem; font-weight: 500; color: var(--text-muted); }
-    .pricing-row .plan-price {
-      font-size: 1.05rem;
-      font-weight: 700;
-      font-family: var(--display);
+    .pricing-card .plan-price .currency {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-muted);
     }
-    .pricing-row .plan-price .currency { font-size: 0.75rem; font-weight: 500; color: var(--text-muted); }
-    .pricing-row .buy-btn {
-      margin-left: 12px;
-      padding: 6px 16px;
+    .pricing-card .buy-btn {
+      padding: 6px 18px;
       border-radius: 20px;
       background: var(--accent-gradient);
       color: #1A1410;
       font-weight: 600;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       border: none;
       cursor: pointer;
       transition: all 0.15s;
       font-family: var(--font);
-      white-space: nowrap;
     }
-    .pricing-row .buy-btn:hover { transform: scale(1.04); }
+    .pricing-card .buy-btn:hover { transform: scale(1.06); }
+
+    .pricing-card .plan-badge {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 100px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      align-self: flex-start;
+    }
+    .badge-light { background: var(--accent-subtle); color: var(--badge-text); }
+    .badge-stream { background: rgba(139,92,246,0.08); color: #8B5CF6; }
+    .badge-heavy { background: rgba(239,68,68,0.08); color: #EF4444; }
+    .badge-pro { background: rgba(16,185,129,0.08); color: var(--green); }
 
     /* ─── FEATURES ───────────────────────────────────────── */
     .features {
@@ -528,10 +571,12 @@
       .network-card p { font-size: 0.7rem; }
       .features { grid-template-columns: 1fr; max-width: 320px; margin-left: auto; margin-right: auto; }
       .about-card { padding: 20px; }
-      .pricing-row { padding: 12px 14px; }
-      .pricing-row .plan-data { font-size: 0.92rem; }
-      .pricing-row .plan-price { font-size: 0.92rem; }
-      .pricing-row .buy-btn { padding: 5px 12px; font-size: 0.72rem; }
+      .pricing-table { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .pricing-card { padding: 16px 12px; }
+      .pricing-card .plan-gb { font-size: 1.3rem; }
+      .pricing-card .plan-desc { font-size: 0.7rem; margin-bottom: 10px; }
+      .pricing-card .plan-price { font-size: 0.88rem; }
+      .pricing-card .buy-btn { padding: 5px 14px; font-size: 0.7rem; }
       .track-card { padding: 20px; }
       .section-header h2 { font-size: 1.2rem; }
       #pricingSection { min-height: 380px; }
@@ -539,6 +584,9 @@
     @media (max-width: 480px) {
       .network-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
       .network-card { padding: 14px 8px; }
+      .pricing-table { grid-template-columns: 1fr; gap: 8px; }
+      .pricing-card { padding: 14px 12px; }
+      .pricing-card .plan-gb { font-size: 1.2rem; }
     }
     @media (min-width: 769px) {
       .hamburger { display: none !important; }
@@ -764,23 +812,23 @@
 
 <script>
 const pricingData = [
-  { data: '1GB', price: 5 },
-  { data: '2GB', price: 10 },
-  { data: '3GB', price: 13 },
-  { data: '4GB', price: 19 },
-  { data: '5GB', price: 23 },
-  { data: '6GB', price: 28 },
-  { data: '7GB', price: 30 },
-  { data: '8GB', price: 37 },
-  { data: '10GB', price: 47 },
-  { data: '15GB', price: 68 },
-  { data: '20GB', price: 88 },
-  { data: '25GB', price: 108 },
-  { data: '30GB', price: 128 },
-  { data: '40GB', price: 170 },
-  { data: '50GB', price: 220 },
-  { data: '100GB', price: 420 },
-  { data: '200GB', price: 790 },
+  { data: '1GB', price: 5, desc: 'Light browsing, WhatsApp', badge: 'Light', badgeClass: 'badge-light' },
+  { data: '2GB', price: 10, desc: 'Daily browsing & social', badge: 'Light', badgeClass: 'badge-light' },
+  { data: '3GB', price: 13, desc: 'Daily browsing & social', badge: 'Light', badgeClass: 'badge-light' },
+  { data: '4GB', price: 19, desc: 'Streaming & everyday use', badge: 'Stream', badgeClass: 'badge-stream' },
+  { data: '5GB', price: 23, desc: 'Streaming & everyday use', badge: 'Stream', badgeClass: 'badge-stream' },
+  { data: '6GB', price: 28, desc: 'Streaming & everyday use', badge: 'Stream', badgeClass: 'badge-stream' },
+  { data: '7GB', price: 30, desc: 'Heavy streaming & video', badge: 'Heavy', badgeClass: 'badge-heavy' },
+  { data: '8GB', price: 37, desc: 'Heavy streaming & video', badge: 'Heavy', badgeClass: 'badge-heavy' },
+  { data: '10GB', price: 47, desc: 'Heavy streaming & video', badge: 'Heavy', badgeClass: 'badge-heavy' },
+  { data: '15GB', price: 68, desc: 'Weekly heavy usage', badge: 'Pro', badgeClass: 'badge-pro' },
+  { data: '20GB', price: 88, desc: 'Weekly heavy usage', badge: 'Pro', badgeClass: 'badge-pro' },
+  { data: '25GB', price: 108, desc: 'Power user weekly', badge: 'Pro', badgeClass: 'badge-pro' },
+  { data: '30GB', price: 128, desc: 'Power user weekly', badge: 'Pro', badgeClass: 'badge-pro' },
+  { data: '40GB', price: 170, desc: 'Full month coverage', badge: 'Pro', badgeClass: 'badge-pro' },
+  { data: '50GB', price: 220, desc: 'Full month coverage', badge: 'Pro', badgeClass: 'badge-pro' },
+  { data: '100GB', price: 420, desc: 'Hotspot & heavy streaming', badge: 'Limitless', badgeClass: 'badge-pro' },
+  { data: '200GB', price: 790, desc: 'Hotspot & heavy streaming', badge: 'Limitless', badgeClass: 'badge-pro' },
 ];
 
 const networkColors = {
@@ -803,9 +851,11 @@ function renderPlans(network) {
     </div>
     <div class="pricing-table">
       ${pricingData.map(p => `
-        <div class="pricing-row" onclick="buyPlan('${network}', '${p.data}', ${p.price})">
-          <div class="plan-data">${p.data} <span class="small">GB</span></div>
-          <div style="display:flex;align-items:center;gap:8px">
+        <div class="pricing-card" onclick="buyPlan('${network}', '${p.data}', ${p.price})">
+          <span class="plan-badge ${p.badgeClass}">${p.badge}</span>
+          <div class="plan-gb">${p.data.replace('GB','')}<span class="gb-label">GB</span></div>
+          <div class="plan-desc">${p.desc}</div>
+          <div class="plan-bottom">
             <div class="plan-price"><span class="currency">GH₵</span> ${p.price}</div>
             <button class="buy-btn">Buy</button>
           </div>
