@@ -321,6 +321,7 @@
     /* ─── PRICING ────────────────────────────────────────── */
     .pricing-section { display: none; margin-bottom: 48px; animation: fadeUp 0.3s ease-out; }
     .pricing-section.visible { display: block; }
+    #pricingSection { min-height: 580px; }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     .pricing-header {
@@ -436,7 +437,7 @@
       max-width: 440px; margin: 0 auto;
       padding: 28px; border-radius: var(--radius-xl);
       background: var(--bg-card); border: 1px solid var(--border);
-      text-align: center;
+      text-align: center; min-height: 240px;
     }
     .track-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; font-family: var(--display); }
     .track-card > p { color: var(--text-secondary); font-size: 0.82rem; margin-bottom: 20px; }
@@ -520,7 +521,11 @@
       .hero h1 { font-size: clamp(1.8rem, 7vw, 2.4rem); }
       .stats-bar { gap: 24px; padding: 24px 0 32px; }
       .stat-number { font-size: 1.2rem; }
-      .network-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .network-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .network-card { padding: 16px 10px; }
+      .network-icon { width: 36px; height: 36px; font-size: 0.85rem; }
+      .network-card h3 { font-size: 0.82rem; }
+      .network-card p { font-size: 0.7rem; }
       .features { grid-template-columns: 1fr; max-width: 320px; margin-left: auto; margin-right: auto; }
       .about-card { padding: 20px; }
       .pricing-row { padding: 12px 14px; }
@@ -529,9 +534,11 @@
       .pricing-row .buy-btn { padding: 5px 12px; font-size: 0.72rem; }
       .track-card { padding: 20px; }
       .section-header h2 { font-size: 1.2rem; }
+      #pricingSection { min-height: 380px; }
     }
     @media (max-width: 480px) {
-      .network-grid { grid-template-columns: 1fr; }
+      .network-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .network-card { padding: 14px 8px; }
     }
     @media (min-width: 769px) {
       .hamburger { display: none !important; }
