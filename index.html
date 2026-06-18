@@ -10,61 +10,61 @@
 
     /* ─── LIGHT THEME (default) ──────────────────────────── */
     :root {
-      --bg: #f5f5f0;
+      --bg: #f8f8fa;
       --bg-card: #ffffff;
-      --surface: rgba(0,0,0,0.04);
-      --surface-hover: rgba(0,0,0,0.07);
-      --surface-strong: rgba(0,0,0,0.1);
-      --border: rgba(0,0,0,0.08);
-      --border-active: rgba(0,0,0,0.16);
-      --text: #1a1a1a;
-      --text-muted: #666;
+      --surface: rgba(0,0,0,0.03);
+      --surface-hover: rgba(0,0,0,0.05);
+      --surface-strong: rgba(0,0,0,0.08);
+      --border: rgba(0,0,0,0.06);
+      --border-active: rgba(0,0,0,0.14);
+      --text: #1a1a2e;
+      --text-muted: #777;
       --text-dim: #999;
-      --mtn-yellow: #FFCC00;
-      --mtn-orange: #FFA000;
-      --mtn-dark: #FF8800;
-      --gradient: linear-gradient(135deg, #FFCC00, #FF8800);
-      --gradient-2: linear-gradient(135deg, #FFA000, #FF6600);
+      --mtn-yellow: #F5C800;
+      --mtn-orange: #E89900;
+      --mtn-dark: #D48800;
+      --gradient: linear-gradient(135deg, #F5C800, #E8A000);
+      --gradient-2: linear-gradient(135deg, #E8A000, #D48800);
       --green: #22C55E;
       --gold: #F59E0B;
       --red: #EF4444;
-      --overlay: rgba(0,0,0,0.3);
+      --overlay: rgba(0,0,0,0.25);
       --radius: 16px;
       --radius-sm: 10px;
       --radius-xs: 6px;
       --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --mono: 'JetBrains Mono', monospace;
-      --nav-blur: rgba(245,245,240,0.85);
-      --hero-bg: radial-gradient(ellipse at 20% 50%, rgba(255,204,0,0.08) 0%, transparent 50%),
-                 radial-gradient(ellipse at 80% 50%, rgba(255,160,0,0.05) 0%, transparent 50%);
-      --input-bg: #fff;
-      --input-border: rgba(0,0,0,0.15);
+      --nav-blur: rgba(255,255,255,0.9);
+      --hero-bg: radial-gradient(ellipse at 20% 50%, rgba(245,200,0,0.05) 0%, transparent 50%),
+                 radial-gradient(ellipse at 80% 50%, rgba(232,152,0,0.03) 0%, transparent 50%);
+      --input-bg: #ffffff;
+      --input-border: rgba(0,0,0,0.12);
       --input-text: #1a1a1a;
-      --placeholder: #aaa;
-      --accent-text: #b88600;
+      --placeholder: #bbb;
+      --accent-text: #a87800;
     }
 
     /* ─── DARK THEME ─────────────────────────────────────── */
     [data-theme="dark"] {
       --bg: #0a0a0f;
-      --bg-card: #12121a;
-      --surface: rgba(255,255,255,0.04);
-      --surface-hover: rgba(255,255,255,0.08);
-      --surface-strong: rgba(255,255,255,0.12);
-      --border: rgba(255,255,255,0.08);
-      --border-active: rgba(255,255,255,0.15);
+      --bg-card: #151520;
+      --surface: rgba(255,255,255,0.05);
+      --surface-hover: rgba(255,255,255,0.09);
+      --surface-strong: rgba(255,255,255,0.13);
+      --border: rgba(255,255,255,0.09);
+      --border-active: rgba(255,255,255,0.16);
       --text: #f0f0f0;
-      --text-muted: #888;
-      --text-dim: #555;
+      --text-muted: #999;
+      --text-dim: #666;
       --overlay: rgba(0,0,0,0.6);
-      --nav-blur: rgba(10,10,15,0.8);
-      --input-bg: rgba(255,255,255,0.06);
+      --nav-blur: rgba(10,10,18,0.85);
+      --input-bg: rgba(255,255,255,0.07);
       --input-border: rgba(255,255,255,0.12);
       --input-text: #f0f0f0;
-      --placeholder: #555;
-      --accent-text: #FFCC00;
-      --hero-bg: radial-gradient(ellipse at 20% 50%, rgba(255,204,0,0.06) 0%, transparent 50%),
-                 radial-gradient(ellipse at 80% 50%, rgba(255,160,0,0.04) 0%, transparent 50%);
+      --placeholder: #666;
+      --accent-text: #F5C800;
+      --hero-bg: radial-gradient(ellipse at 20% 50%, rgba(245,200,0,0.05) 0%, transparent 50%),
+                 radial-gradient(ellipse at 80% 50%, rgba(232,152,0,0.03) 0%, transparent 50%);
     }
 
     html { scroll-behavior: smooth; }
@@ -247,26 +247,45 @@
     .mobile-menu {
       position: fixed;
       top: 60px;
-      left: 0;
       right: 0;
+      width: 280px;
       bottom: 0;
       z-index: 99;
       background: var(--nav-blur);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
+      border-left: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      padding: 20px 16px 32px;
+      padding: 16px 12px 32px;
       gap: 4px;
       transform: translateX(100%);
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -8px 0 32px rgba(0,0,0,0.15);
     }
     .mobile-menu.open { transform: translateX(0); }
+
+    /* Backdrop overlay when mobile menu open */
+    .menu-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 98;
+      background: rgba(0,0,0,0.3);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .menu-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     .mobile-menu .nav-link,
     .mobile-menu .nav-whatsapp {
-      font-size: 1.05rem;
+      font-size: 1rem;
       padding: 14px 16px;
       width: 100%;
+      text-align: left;
       justify-content: flex-start;
       border-radius: var(--radius-sm);
     }
@@ -717,6 +736,9 @@
   </div>
 </nav>
 
+<!-- Mobile Menu Backdrop -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMobileMenu()"></div>
+
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
   <button class="nav-link" onclick="showHome(); scrollToSection('networks'); closeMobileMenu()">📡 Networks</button>
@@ -1128,12 +1150,14 @@ function initTheme() {
 function toggleMobileMenu() {
   document.getElementById('hamburger').classList.toggle('open');
   document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('menuOverlay').classList.toggle('open');
   document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
 }
 
 function closeMobileMenu() {
   document.getElementById('hamburger').classList.remove('open');
   document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('menuOverlay').classList.remove('open');
   document.body.style.overflow = '';
 }
 
