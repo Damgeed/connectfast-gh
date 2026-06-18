@@ -4,82 +4,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ConnectFast GH — Mobile Data & Airtime</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     /* ─── LIGHT THEME (default) ──────────────────────────── */
     :root {
-      --bg: #faf9f6;
-      --bg-card: #ffffff;
-      --surface: rgba(0,0,0,0.04);
+      --bg: #FFFFFF;
+      --bg-alt: #F8F9FA;
+      --bg-card: #FFFFFF;
+      --surface: rgba(0,0,0,0.03);
       --surface-hover: rgba(0,0,0,0.06);
-      --surface-strong: rgba(0,0,0,0.08);
-      --border: #eee;
-      --border-subtle: #f2f2f2;
-      --border-active: #ddd;
-      --text: #171717;
-      --text-muted: #6b6b6b;
-      --text-dim: #999;
-      --accent: #E8A000;
-      --accent-subtle: rgba(232,160,0,0.08);
-      --accent-soft: #F5C800;
-      --gradient: linear-gradient(135deg, #F5C800, #E8A000);
-      --green: #059669;
+      --border: #E5E7EB;
+      --border-hover: #D1D5DB;
+      --border-active: #BFD2FF;
+      --text: #111827;
+      --text-secondary: #4B5563;
+      --text-muted: #9CA3AF;
+      --accent: #FFC107;
+      --accent-hover: #D4A017;
+      --accent-subtle: rgba(255,193,7,0.08);
+      --accent-border: rgba(255,193,7,0.25);
+      --green: #10B981;
+      --green-subtle: rgba(16,185,129,0.08);
+      --red: #EF4444;
       --gold: #D97706;
-      --red: #DC2626;
-      --overlay: rgba(0,0,0,0.2);
-      --radius: 12px;
-      --radius-sm: 8px;
-      --radius-xs: 6px;
+      --overlay: rgba(0,0,0,0.15);
+      --radius: 8px;
+      --radius-sm: 6px;
+      --radius-lg: 12px;
       --radius-xl: 16px;
-      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --mono: 'JetBrains Mono', monospace;
       --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
       --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
-      --nav-blur: rgba(250,249,246,0.85);
-      --hero-bg: radial-gradient(ellipse at 50% 0%, rgba(245,200,0,0.06) 0%, transparent 60%);
-      --input-bg: #ffffff;
-      --input-border: #e2e2e2;
-      --input-text: #171717;
-      --placeholder: #b0b0b0;
-      --badge-bg: rgba(232,160,0,0.06);
-      --badge-text: #a87800;
+      --shadow-xl: 0 16px 48px rgba(0,0,0,0.10);
+      --nav-blur: rgba(255,255,255,0.85);
+      --input-bg: #FFFFFF;
+      --input-border: #D1D5DB;
+      --input-text: #111827;
+      --placeholder: #B0B0B0;
+      --badge-text: #D4A017;
+      --badge-bg: rgba(212,160,23,0.08);
+      --hl-gradient: linear-gradient(135deg, #FFC107 0%, #E8A000 100%);
     }
 
     /* ─── DARK THEME ─────────────────────────────────────── */
     [data-theme="dark"] {
-      --bg: #0b0b10;
-      --bg-card: #13131a;
+      --bg: #0B0B0F;
+      --bg-alt: #101014;
+      --bg-card: #15151C;
       --surface: rgba(255,255,255,0.04);
       --surface-hover: rgba(255,255,255,0.07);
-      --surface-strong: rgba(255,255,255,0.11);
       --border: rgba(255,255,255,0.08);
-      --border-subtle: rgba(255,255,255,0.04);
-      --border-active: rgba(255,255,255,0.14);
-      --text: #ededee;
-      --text-muted: #8b8b96;
-      --text-dim: #5c5c66;
-      --accent: #F5C800;
-      --accent-subtle: rgba(245,200,0,0.08);
-      --accent-soft: #E8A000;
-      --gradient: linear-gradient(135deg, #F5C800, #E8A000);
-      --green: #22C55E;
-      --gold: #F59E0B;
-      --red: #EF4444;
+      --border-hover: rgba(255,255,255,0.14);
+      --border-active: rgba(255,193,7,0.3);
+      --text: #EDEDEE;
+      --text-secondary: #9CA3AF;
+      --text-muted: #6B7280;
+      --accent: #FFC107;
+      --accent-hover: #FFD54F;
+      --accent-subtle: rgba(255,193,7,0.08);
+      --accent-border: rgba(255,193,7,0.2);
+      --green: #34D399;
+      --green-subtle: rgba(52,211,153,0.08);
       --overlay: rgba(0,0,0,0.5);
       --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
-      --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
       --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
-      --nav-blur: rgba(11,11,16,0.85);
-      --hero-bg: radial-gradient(ellipse at 50% 0%, rgba(245,200,0,0.05) 0%, transparent 60%);
+      --shadow-xl: 0 16px 48px rgba(0,0,0,0.5);
+      --nav-blur: rgba(11,11,15,0.85);
       --input-bg: rgba(255,255,255,0.06);
       --input-border: rgba(255,255,255,0.10);
-      --input-text: #ededee;
+      --input-text: #EDEDEE;
       --placeholder: #555;
-      --badge-bg: rgba(245,200,0,0.08);
-      --badge-text: #F5C800;
+      --badge-text: #FFC107;
+      --badge-bg: rgba(255,193,7,0.08);
+      --hl-gradient: linear-gradient(135deg, #FFC107 0%, #E8A000 100%);
     }
 
     html { scroll-behavior: smooth; }
@@ -94,24 +96,13 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Smooth bg */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--hero-bg);
-      z-index: -1;
-      pointer-events: none;
-      transition: background 0.2s;
-    }
-
     /* ─── NAVBAR ─────────────────────────────────────────── */
     .navbar {
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       background: var(--nav-blur);
       border-bottom: 1px solid var(--border);
       padding: 0 24px;
@@ -119,14 +110,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: background 0.2s;
+      transition: background 0.2s, border 0.2s;
     }
     .nav-brand {
       display: flex;
       align-items: center;
       gap: 10px;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       text-decoration: none;
       color: var(--text);
       cursor: pointer;
@@ -137,14 +128,14 @@
     .nav-logo-mark {
       width: 28px;
       height: 28px;
-      background: var(--gradient);
+      background: var(--hl-gradient);
       border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 0.75rem;
-      color: #000;
+      font-size: 0.72rem;
+      color: #111827;
     }
 
     .nav-center {
@@ -154,8 +145,8 @@
     }
     .nav-link {
       padding: 6px 14px;
-      border-radius: var(--radius-xs);
-      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
       text-decoration: none;
       font-size: 0.88rem;
       font-weight: 500;
@@ -170,15 +161,13 @@
       color: var(--text);
       background: var(--surface);
     }
-    .nav-link.active { color: var(--text); }
-
     .nav-whatsapp {
       display: flex;
       align-items: center;
       gap: 5px;
       padding: 6px 12px;
-      border-radius: var(--radius-xs);
-      background: rgba(5,150,105,0.08);
+      border-radius: var(--radius-sm);
+      background: var(--green-subtle);
       color: var(--green);
       text-decoration: none;
       font-size: 0.83rem;
@@ -187,21 +176,18 @@
       margin-left: 4px;
       white-space: nowrap;
     }
-    .nav-whatsapp:hover {
-      background: rgba(5,150,105,0.14);
-      color: var(--green);
-    }
+    .nav-whatsapp:hover { background: rgba(16,185,129,0.14); }
 
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 2px;
     }
 
     .theme-toggle {
       width: 32px;
       height: 32px;
-      border-radius: 50%;
+      border-radius: var(--radius-sm);
       border: none;
       background: transparent;
       color: var(--text-muted);
@@ -213,38 +199,35 @@
       transition: all 0.15s;
       flex-shrink: 0;
     }
-    .theme-toggle:hover {
-      background: var(--surface);
-      color: var(--accent);
-    }
+    .theme-toggle:hover { background: var(--surface); color: var(--accent); }
 
     .hamburger {
       display: none;
       width: 32px;
       height: 32px;
-      border-radius: var(--radius-xs);
+      border-radius: var(--radius-sm);
       border: none;
       background: transparent;
       cursor: pointer;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      gap: 3.5px;
+      gap: 4px;
       transition: all 0.15s;
       flex-shrink: 0;
     }
     .hamburger:hover { background: var(--surface); }
     .hamburger span {
       display: block;
-      width: 15px;
+      width: 14px;
       height: 1.5px;
-      background: var(--text-muted);
+      background: var(--text-secondary);
       border-radius: 1px;
       transition: all 0.2s;
     }
-    .hamburger.open span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+    .hamburger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
 
     .mobile-menu {
       position: fixed;
@@ -257,15 +240,14 @@
       border-left: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      padding: 12px 10px 32px;
+      padding: 12px 10px 24px;
       gap: 2px;
       transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: var(--shadow-lg);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: var(--shadow-xl);
       overflow-y: auto;
     }
     .mobile-menu.open { transform: translateX(0); }
-
     .menu-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -273,29 +255,24 @@
       background: var(--overlay);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.25s ease;
     }
     .menu-overlay.open { opacity: 1; pointer-events: auto; }
-
     .mobile-menu .nav-link,
     .mobile-menu .nav-whatsapp {
-      font-size: 0.95rem;
-      padding: 12px 14px;
+      font-size: 0.92rem;
+      padding: 11px 14px;
       width: 100%;
       text-align: left;
       justify-content: flex-start;
       border-radius: var(--radius-sm);
     }
 
-    .container {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
     /* ─── HERO ─────────────────────────────────────────────── */
     .hero {
-      padding: 80px 0 48px;
+      padding: 96px 0 48px;
       text-align: center;
     }
     .hero-badge {
@@ -304,31 +281,31 @@
       gap: 6px;
       padding: 5px 12px;
       border-radius: 100px;
-      background: var(--badge-bg);
-      border: 1px solid rgba(232,160,0,0.15);
+      background: var(--accent-subtle);
+      border: 1px solid var(--accent-border);
       font-size: 0.78rem;
       font-weight: 500;
       color: var(--badge-text);
       margin-bottom: 24px;
     }
     .hero h1 {
-      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      font-size: clamp(2.5rem, 5vw, 4rem);
       font-weight: 800;
-      line-height: 1.15;
+      line-height: 1.1;
       margin-bottom: 16px;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       color: var(--text);
     }
-    .hero h1 span {
-      background: var(--gradient);
+    .hero h1 .hl {
+      background: var(--hl-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .hero p {
       font-size: 1.05rem;
-      color: var(--text-muted);
-      max-width: 520px;
+      color: var(--text-secondary);
+      max-width: 480px;
       margin: 0 auto 32px;
       line-height: 1.7;
     }
@@ -343,7 +320,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 12px 28px;
+      padding: 11px 28px;
       border-radius: var(--radius-sm);
       background: var(--text);
       color: var(--bg);
@@ -352,18 +329,15 @@
       border: none;
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: all 0.15s;
       font-family: var(--font);
     }
-    .btn-primary:hover {
-      opacity: 0.85;
-      transform: translateY(-1px);
-    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
     .btn-secondary {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 12px 28px;
+      padding: 11px 28px;
       border-radius: var(--radius-sm);
       background: transparent;
       color: var(--text);
@@ -372,60 +346,48 @@
       border: 1px solid var(--border);
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: all 0.15s;
       font-family: var(--font);
     }
-    .btn-secondary:hover {
-      background: var(--surface);
-      border-color: var(--border-active);
-    }
+    .btn-secondary:hover { background: var(--surface); border-color: var(--border-hover); }
 
+    /* ─── STATS ────────────────────────────────────────────── */
     .stats-bar {
       display: flex;
       justify-content: center;
-      gap: 48px;
-      padding: 40px 0 64px;
+      gap: 56px;
+      padding: 48px 0 72px;
       flex-wrap: wrap;
     }
     .stat-item { text-align: center; }
     .stat-number {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 700;
       font-family: var(--mono);
-      color: var(--text);
       letter-spacing: -0.03em;
+      color: var(--text);
     }
-    .stat-label {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
+    .stat-label { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
 
-    .section-header {
-      text-align: center;
-      margin-bottom: 36px;
-    }
+    .section-header { text-align: center; margin-bottom: 36px; }
     .section-header h2 {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 700;
       margin-bottom: 6px;
       letter-spacing: -0.01em;
     }
-    .section-header p {
-      color: var(--text-muted);
-      font-size: 0.92rem;
-    }
+    .section-header p { color: var(--text-secondary); font-size: 0.92rem; }
 
     /* ─── NETWORK GRID ─────────────────────────────────────── */
     .network-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
       margin-bottom: 64px;
     }
     .network-card {
       position: relative;
-      padding: 24px 20px;
+      padding: 28px 20px;
       border-radius: var(--radius);
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -434,22 +396,25 @@
       text-align: center;
     }
     .network-card:hover {
-      border-color: var(--border-active);
+      border-color: var(--border-hover);
       box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
     }
     .network-card.active {
-      border-color: rgba(232,160,0,0.3);
-      box-shadow: 0 0 0 1px rgba(232,160,0,0.15);
+      border-color: var(--accent-border);
+      box-shadow: 0 0 0 2px var(--accent-subtle);
     }
+    .network-card.active .network-icon { box-shadow: 0 0 0 3px var(--accent-subtle); }
     .network-icon {
       width: 48px; height: 48px;
       border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
       margin: 0 auto 12px;
-      font-size: 1.2rem; font-weight: 800; color: #000;
+      font-size: 1.2rem; font-weight: 800; color: #111827;
+      transition: box-shadow 0.2s;
     }
-    .network-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 3px; }
-    .network-card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+    .network-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
+    .network-card p { font-size: 0.8rem; color: var(--text-secondary); }
     .network-card .plan-count {
       display: inline-block; margin-top: 10px;
       padding: 2px 10px; border-radius: 100px;
@@ -458,13 +423,13 @@
     .network-badge {
       position: absolute; top: 10px; right: 10px;
       padding: 2px 8px; border-radius: 100px;
-      font-size: 0.63rem; font-weight: 600; letter-spacing: 0.3px;
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.3px;
     }
     .badge-popular { background: var(--badge-bg); color: var(--badge-text); }
-    .badge-new { background: rgba(37,99,235,0.08); color: #2563EB; }
+    .badge-new { background: rgba(59,130,246,0.08); color: #3B82F6; }
 
-    .network-mtn .network-icon { background: var(--gradient); }
-    .network-mtn h3 { color: var(--accent); }
+    .network-mtn .network-icon { background: var(--hl-gradient); }
+    .network-mtn h3 { color: var(--badge-text); }
     .network-vodafone .network-icon { background: linear-gradient(135deg, #E60000, #CC0000); }
     .network-vodafone h3 { color: #E60000; }
     .network-airteltigo .network-icon { background: linear-gradient(135deg, #ED1C24, #C4121A); }
@@ -473,9 +438,9 @@
     .network-glo h3 { color: #00ADEF; }
 
     /* ─── PRICING ────────────────────────────────────────── */
-    .pricing-section { display: none; margin-bottom: 64px; animation: fadeUp 0.3s ease-out; }
+    .pricing-section { display: none; margin-bottom: 64px; animation: fadeIn 0.25s ease-out; }
     .pricing-section.visible { display: block; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
     .pricing-header {
       display: flex; align-items: center; justify-content: space-between;
@@ -483,13 +448,13 @@
     }
     .pricing-header-left { display: flex; align-items: center; gap: 10px; }
     .pricing-header-left .back-btn {
-      width: 32px; height: 32px; border-radius: var(--radius-xs);
+      width: 32px; height: 32px; border-radius: var(--radius-sm);
       background: transparent; border: 1px solid var(--border);
-      color: var(--text-muted); display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: all 0.15s; font-size: 1rem;
+      color: var(--text-secondary); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.15s; font-size: 0.95rem;
     }
     .pricing-header-left .back-btn:hover { background: var(--surface); color: var(--text); }
-    .pricing-header h2 { font-size: 1.3rem; font-weight: 600; }
+    .pricing-header h2 { font-size: 1.25rem; font-weight: 600; }
     .pricing-header .network-chip {
       padding: 2px 10px; border-radius: 100px; font-size: 0.72rem; font-weight: 500;
     }
@@ -499,9 +464,9 @@
       border-radius: var(--radius-sm); padding: 3px;
     }
     .pricing-tab {
-      padding: 6px 16px; border-radius: var(--radius-xs); border: none;
-      background: transparent; color: var(--text-muted); font-weight: 500;
-      font-size: 0.82rem; cursor: pointer; transition: all 0.15s; font-family: var(--font);
+      padding: 6px 16px; border-radius: var(--radius-sm); border: none;
+      background: transparent; color: var(--text-secondary); font-weight: 500;
+      font-size: 0.8rem; cursor: pointer; transition: all 0.15s; font-family: var(--font);
     }
     .pricing-tab:hover { color: var(--text); }
     .pricing-tab.active {
@@ -521,95 +486,74 @@
       transition: all 0.2s; display: flex; flex-direction: column;
     }
     .plan-card:hover {
-      border-color: var(--border-active);
+      border-color: var(--border-hover);
       box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
     }
     .plan-card.featured {
-      border-color: rgba(232,160,0,0.2);
-      background: linear-gradient(135deg, rgba(232,160,0,0.03), transparent);
+      border-color: var(--accent-border);
     }
     .plan-card.featured::before {
-      content: 'Best Value'; position: absolute; top: -1px; right: 16px;
+      content: 'Best Value'; position: absolute; top: -1px; right: 14px;
       padding: 2px 10px; border-radius: 0 0 6px 6px;
-      background: var(--gradient); font-size: 0.63rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.4px; color: #000;
+      background: var(--hl-gradient); font-size: 0.6rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px; color: #111827;
     }
     .plan-data {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 700;
       margin-bottom: 2px;
       font-family: var(--mono);
-      color: var(--text);
       letter-spacing: -0.02em;
+      color: var(--text);
     }
-    .plan-type {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      font-weight: 500;
-    }
+    .plan-type { font-size: 0.74rem; color: var(--text-muted); margin-bottom: 16px; font-weight: 500; }
     .plan-details { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
     .plan-detail {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
-      color: var(--text-muted);
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.8rem; color: var(--text-secondary);
     }
     .plan-detail svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-      opacity: 0.4;
-      stroke: var(--text);
+      width: 14px; height: 14px; flex-shrink: 0;
+      opacity: 0.35; stroke: var(--text);
     }
     .plan-price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-      margin-top: auto;
-      padding-top: 14px;
-      border-top: 1px solid var(--border);
+      display: flex; align-items: baseline; gap: 6px;
+      margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border);
     }
-    .plan-price { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
-    .plan-price .currency { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); }
+    .plan-price { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; }
+    .plan-price .currency { font-size: 0.82rem; font-weight: 500; color: var(--text-muted); }
     .plan-buy {
-      margin-top: 10px;
-      width: 100%;
-      padding: 10px;
-      border-radius: var(--radius-xs);
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text);
+      margin-top: 10px; width: 100%; padding: 10px;
+      border-radius: var(--radius-sm);
+      background: var(--accent);
+      color: #111827;
       font-weight: 600;
       font-size: 0.85rem;
+      border: none;
       cursor: pointer;
       transition: all 0.15s;
       font-family: var(--font);
     }
-    .plan-buy:hover {
-      background: var(--text);
-      color: var(--bg);
-      border-color: var(--text);
-    }
+    .plan-buy:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
     .filter-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
     .filter-chip {
       padding: 4px 12px; border-radius: 100px; background: var(--surface);
-      border: 1px solid var(--border); color: var(--text-muted); font-size: 0.78rem;
+      border: 1px solid var(--border); color: var(--text-secondary); font-size: 0.78rem;
       font-weight: 500; cursor: pointer; transition: all 0.15s; font-family: var(--font);
     }
     .filter-chip:hover { background: var(--surface-hover); color: var(--text); }
     .filter-chip.active {
       background: var(--accent-subtle);
-      border-color: rgba(232,160,0,0.2);
+      border-color: var(--accent-border);
       color: var(--badge-text);
     }
 
     /* ─── FEATURES ───────────────────────────────────────── */
     .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
       margin-bottom: 64px;
     }
@@ -621,26 +565,56 @@
       transition: all 0.2s;
     }
     .feature-card:hover {
-      border-color: var(--border-active);
+      border-color: var(--border-hover);
       box-shadow: var(--shadow-md);
     }
     .feature-icon {
-      width: 40px;
-      height: 40px;
+      width: 38px; height: 38px;
       border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 14px;
-      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px; font-size: 0.95rem;
     }
-    .feature-card h3 { font-size: 0.92rem; font-weight: 600; margin-bottom: 4px; }
-    .feature-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+    .feature-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+    .feature-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ─── TESTIMONIALS ────────────────────────────────────── */
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 64px;
+    }
+    .testimonial-card {
+      padding: 24px;
+      border-radius: var(--radius);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+    }
+    .testimonial-card .stars { color: var(--accent); font-size: 0.9rem; margin-bottom: 10px; }
+    .testimonial-card blockquote {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-style: normal;
+      margin-bottom: 14px;
+    }
+    .testimonial-card .author {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .testimonial-card .author-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--hl-gradient);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 700; color: #111827;
+    }
+    .testimonial-card .author-info { text-align: left; }
+    .testimonial-card .author-name { font-size: 0.82rem; font-weight: 600; }
+    .testimonial-card .author-location { font-size: 0.75rem; color: var(--text-muted); }
 
     /* ─── FAQ ────────────────────────────────────────────── */
-    .faq-section { margin-bottom: 64px; }
+    .faq-section { margin-bottom: 64px; max-width: 700px; margin-left: auto; margin-right: auto; }
     .faq-item {
-      padding: 16px 0;
+      padding: 18px 0;
       border-bottom: 1px solid var(--border);
     }
     .faq-item:last-child { border-bottom: none; }
@@ -650,77 +624,30 @@
       color: var(--text);
     }
     .faq-question:hover { color: var(--accent); }
-    .faq-arrow { transition: transform 0.25s; color: var(--text-dim); font-size: 0.75rem; }
+    .faq-arrow { transition: transform 0.2s; color: var(--text-muted); font-size: 0.7rem; }
     .faq-item.open .faq-arrow { transform: rotate(180deg); }
     .faq-answer {
       max-height: 0; overflow: hidden;
       transition: max-height 0.3s ease, padding 0.3s ease;
-      color: var(--text-muted); font-size: 0.85rem; line-height: 1.7;
+      color: var(--text-secondary); font-size: 0.85rem; line-height: 1.7;
     }
     .faq-item.open .faq-answer { max-height: 400px; padding-top: 10px; }
-
-    /* ─── FOOTER ──────────────────────────────────────────── */
-    .footer {
-      padding: 40px 0 28px;
-      border-top: 1px solid var(--border);
-      text-align: center;
-    }
-    .footer-brand {
-      font-weight: 600;
-      font-size: 1rem;
-      margin-bottom: 4px;
-      color: var(--text);
-    }
-    .footer p { color: var(--text-muted); font-size: 0.82rem; }
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin: 12px 0;
-      flex-wrap: wrap;
-    }
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.82rem;
-      transition: color 0.15s;
-      cursor: pointer;
-    }
-    .footer-links a:hover { color: var(--text); }
-    .footer-whatsapp {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 20px;
-      border-radius: var(--radius-xs);
-      border: 1px solid rgba(5,150,105,0.15);
-      background: transparent;
-      color: var(--green);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.85rem;
-      margin-top: 14px;
-      transition: all 0.15s;
-    }
-    .footer-whatsapp:hover {
-      background: rgba(5,150,105,0.06);
-    }
 
     /* ─── TRACK ORDER ────────────────────────────────────── */
     .track-section { margin-bottom: 64px; }
     .track-card {
-      max-width: 500px; margin: 0 auto;
-      padding: 32px; border-radius: var(--radius-xl);
+      max-width: 480px; margin: 0 auto;
+      padding: 32px; border-radius: var(--radius-lg);
       background: var(--bg-card); border: 1px solid var(--border);
       text-align: center;
     }
     .track-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
-    .track-card p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px; }
+    .track-card > p { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 24px; }
     .track-form { display: flex; flex-direction: column; gap: 12px; }
     .track-form input {
       width: 100%; padding: 11px 16px; border-radius: var(--radius-sm);
       border: 1px solid var(--input-border); background: var(--input-bg);
-      color: var(--input-text); font-size: 0.92rem; font-family: var(--font);
+      color: var(--input-text); font-size: 0.9rem; font-family: var(--font);
       outline: none; transition: border 0.15s;
     }
     .track-form input:focus { border-color: var(--accent); }
@@ -731,7 +658,7 @@
       border-radius: var(--radius-sm); background: var(--surface);
       border: 1px solid var(--border);
     }
-    .track-result.show { display: block; animation: fadeUp 0.3s ease-out; }
+    .track-result.show { display: block; animation: fadeIn 0.25s ease-out; }
     .track-result .status-row {
       display: flex; align-items: center; gap: 10px; padding: 8px 0;
       border-bottom: 1px solid var(--border);
@@ -743,23 +670,42 @@
     .status-dot.delivered { background: var(--green); }
     .status-dot.failed { background: var(--red); }
 
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    .footer {
+      padding: 48px 0 32px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .footer-brand { font-weight: 600; font-size: 1rem; margin-bottom: 4px; }
+    .footer > .container > p { color: var(--text-secondary); font-size: 0.82rem; }
+    .footer-links {
+      display: flex; justify-content: center; gap: 24px;
+      margin: 14px 0 16px; flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.82rem; transition: color 0.15s; cursor: pointer;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-whatsapp {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 20px; border-radius: var(--radius-sm);
+      border: 1px solid var(--green-subtle); background: transparent;
+      color: var(--green); text-decoration: none;
+      font-weight: 600; font-size: 0.85rem;
+      transition: all 0.15s;
+    }
+    .footer-whatsapp:hover { background: var(--green-subtle); }
+
     /* ─── TOAST ────────────────────────────────────────────── */
     .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      border-radius: var(--radius-sm);
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(16px);
-      color: var(--text);
-      font-size: 0.85rem;
-      font-weight: 500;
-      z-index: 200;
-      transform: translateY(100px);
-      opacity: 0;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: fixed; bottom: 20px; right: 20px;
+      padding: 12px 20px; border-radius: var(--radius-sm);
+      background: var(--bg-card); border: 1px solid var(--border);
+      backdrop-filter: blur(12px); color: var(--text);
+      font-size: 0.85rem; font-weight: 500; z-index: 200;
+      transform: translateY(100px); opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       box-shadow: var(--shadow-lg);
       display: flex; align-items: center; gap: 8px;
     }
@@ -767,6 +713,10 @@
     .toast-icon { font-size: 1rem; }
 
     /* ─── RESPONSIVE ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .network-grid { grid-template-columns: repeat(2, 1fr); }
+      .features { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 768px) {
       .navbar { padding: 0 14px; height: 52px; }
       .nav-center { display: none; }
@@ -775,22 +725,19 @@
       .hamburger { display: flex; }
       .mobile-menu { top: 52px; width: 240px; }
       .container { padding: 0 14px; }
-      .hero { padding: 48px 0 28px; }
-      .stats-bar { gap: 24px; padding: 24px 0 36px; }
+      .hero { padding: 56px 0 28px; }
+      .stats-bar { gap: 28px; padding: 28px 0 40px; }
       .stat-number { font-size: 1.3rem; }
-      .plans-grid { grid-template-columns: 1fr; }
-      .pricing-header { flex-direction: column; align-items: flex-start; }
-      .pricing-tabs { width: 100%; }
-      .pricing-tab { flex: 1; text-align: center; padding: 6px 10px; font-size: 0.78rem; }
       .network-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .network-card { padding: 20px 14px; }
-      .network-icon { width: 42px; height: 42px; font-size: 1rem; }
+      .features { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .testimonials { grid-template-columns: 1fr; }
+      .pricing-tabs { width: 100%; }
+      .pricing-tab { flex: 1; text-align: center; padding: 6px 10px; font-size: 0.76rem; }
       .track-card { padding: 24px; }
       .section-header h2 { font-size: 1.3rem; }
-      .features { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 480px) {
-      .network-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .network-grid { grid-template-columns: 1fr; }
       .features { grid-template-columns: 1fr; }
     }
     @media (min-width: 769px) {
@@ -808,9 +755,8 @@
     <div class="nav-logo-mark">CF</div>
     ConnectFast
   </a>
-
   <div class="nav-center">
-    <button class="nav-link active" onclick="showHome(); scrollToSection('networks')">Networks</button>
+    <button class="nav-link" onclick="showHome(); scrollToSection('networks')">Networks</button>
     <button class="nav-link" onclick="scrollToSection('track')">Track</button>
     <button class="nav-link" onclick="scrollToSection('faq')">FAQ</button>
     <a href="https://wa.me/233257810481" target="_blank" class="nav-whatsapp">
@@ -818,7 +764,6 @@
       <span>WhatsApp</span>
     </a>
   </div>
-
   <div class="nav-right">
     <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" id="themeBtn">☀️</button>
     <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
@@ -827,7 +772,6 @@
   </div>
 </nav>
 
-<!-- Mobile Menu Backdrop + Menu -->
 <div class="menu-overlay" id="menuOverlay" onclick="closeMobileMenu()"></div>
 <div class="mobile-menu" id="mobileMenu">
   <button class="nav-link" onclick="showHome(); scrollToSection('networks'); closeMobileMenu()">📡 Networks</button>
@@ -835,7 +779,7 @@
   <button class="nav-link" onclick="scrollToSection('faq'); closeMobileMenu()">❓ FAQ</button>
   <div style="flex:1;min-height:8px"></div>
   <a href="https://wa.me/233257810481" target="_blank" class="nav-whatsapp" onclick="closeMobileMenu()">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.137.564 4.157 1.638 5.968L.344 23.656l5.688-1.294A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6a9.54 9.54 0 01-4.88-1.376l-.35-.21-3.38.768.72-3.28-.228-.364A9.558 9.558 0 012.4 12c0-5.292 4.308-9.6 9.6-9.6s9.6 4.308 9.6 9.6-4.308 9.6-9.6 9.6zm5.256-7.224c-.288-.144-1.704-.84-1.968-.936-.264-.096-.456-.144-.648.144-.192.288-.744.936-.912 1.128-.168.192-.336.216-.624.072-.288-.144-1.216-.448-2.316-1.432-.856-.768-1.432-1.712-1.6-2.004-.168-.288-.02-.44.128-.584.132-.132.288-.336.432-.504.144-.168.192-.288.288-.48.096-.192.048-.36-.024-.504-.072-.144-.648-1.56-.888-2.136-.24-.576-.48-.48-.648-.48-.168-.008-.36-.008-.552-.008s-.504.072-.768.36c-.264.288-1.008.984-1.008 2.4s1.032 2.784 1.176 2.976c.144.192 1.992 3.048 4.824 4.272.672.288 1.2.456 1.608.6.672.24 1.288.216 1.776.144.552-.072 1.704-.696 1.944-1.368.24-.672.24-1.248.168-1.368-.072-.12-.264-.192-.552-.336z"/></svg>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.137.564 4.157 1.638 5.968L.344 23.656l5.688-1.294A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6a9.54 9.54 0 01-4.88-1.376l-.35-.21-3.38.768.72-3.28-.228-.364A9.558 9.558 0 012.4 12c0-5.292 4.308-9.6 9.6-9.6s9.6 4.308 9.6 9.6-4.308 9.6-9.6 9.6zm5.256-7.224c-.288-.144-1.704-.84-1.968-.936-.264-.096-.456-.144-.648.144-.192.288-.744.936-.912 1.128-.168.192-.336.216-.624.072-.288-.144-1.216-.448-2.316-1.432-.856-.768-1.432-1.712-1.6-2.004-.168-.288-.02-.44.128-.584.132-.132.288-.336.432-.504.144-.168.192-.288.288-.48.096-.192.048-.36-.024-.504-.072-.144-.648-1.56-.888-2.136-.24-.576-.48-.48-.648-.48-.168-.008-.36-.008-.552-.008s-.504.072-.768.36c-.264.288-1.008.984-1.008 2.4s1.032 2.784 1.176 2.976c.144.192 1.992 3.048 4.824 4.272.672.288 1.2.456 1.608.6.672.24 1.288.216 1.776.144.552-.072 1.704-.696 1.944-1.368.24-.672.24-1.248.168-1.368-.072-.12-.264-.192-.552-.336z"/></svg>
     Order on WhatsApp
   </a>
 </div>
@@ -843,15 +787,15 @@
 <!-- ─── HERO ─────────────────────────────────────── -->
 <section class="hero">
   <div class="container">
-    <div class="hero-badge">⚡ Reliable · Instant · 24/7 Support</div>
-    <h1>Top Up &amp; Stay<br><span>Connected, Fast.</span></h1>
-    <p>Instant mobile data &amp; airtime for all Ghanaian networks. Best prices, zero hassle.</p>
+    <div class="hero-badge">⚡ Trusted by 10,000+ Ghanaians</div>
+    <h1>Top up &amp; stay<br><span class="hl">connected, fast.</span></h1>
+    <p>Instant mobile data &amp; airtime for MTN, Vodafone, AirtelTigo and Glo. Best prices, zero hassle.</p>
     <div class="hero-actions">
       <a class="btn-primary" onclick="document.getElementById('networks').scrollIntoView({behavior:'smooth'})">
         Browse Plans ↓
       </a>
       <a href="https://wa.me/233257810481" target="_blank" class="btn-secondary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.137.564 4.157 1.638 5.968L.344 23.656l5.688-1.294A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6a9.54 9.54 0 01-4.88-1.376l-.35-.21-3.38.768.72-3.28-.228-.364A9.558 9.558 0 012.4 12c0-5.292 4.308-9.6 9.6-9.6s9.6 4.308 9.6 9.6-4.308 9.6-9.6 9.6zm5.256-7.224c-.288-.144-1.704-.84-1.968-.936-.264-.096-.456-.144-.648.144-.192.288-.744.936-.912 1.128-.168.192-.336.216-.624.072-.288-.144-1.216-.448-2.316-1.432-.856-.768-1.432-1.712-1.6-2.004-.168-.288-.02-.44.128-.584.132-.132.288-.336.432-.504.144-.168.192-.288.288-.48.096-.192.048-.36-.024-.504-.072-.144-.648-1.56-.888-2.136-.24-.576-.48-.48-.648-.48-.168-.008-.36-.008-.552-.008s-.504.072-.768.36c-.264.288-1.008.984-1.008 2.4s1.032 2.784 1.176 2.976c.144.192 1.992 3.048 4.824 4.272.672.288 1.2.456 1.608.6.672.24 1.288.216 1.776.144.552-.072 1.704-.696 1.944-1.368.24-.672.24-1.248.168-1.368-.072-.12-.264-.192-.552-.336z"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.137.564 4.157 1.638 5.968L.344 23.656l5.688-1.294A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6a9.54 9.54 0 01-4.88-1.376l-.35-.21-3.38.768.72-3.28-.228-.364A9.558 9.558 0 012.4 12c0-5.292 4.308-9.6 9.6-9.6s9.6 4.308 9.6 9.6-4.308 9.6-9.6 9.6zm5.256-7.224c-.288-.144-1.704-.84-1.968-.936-.264-.096-.456-.144-.648.144-.192.288-.744.936-.912 1.128-.168.192-.336.216-.624.072-.288-.144-1.216-.448-2.316-1.432-.856-.768-1.432-1.712-1.6-2.004-.168-.288-.02-.44.128-.584.132-.132.288-.336.432-.504.144-.168.192-.288.288-.48.096-.192.048-.36-.024-.504-.072-.144-.648-1.56-.888-2.136-.24-.576-.48-.48-.648-.48-.168-.008-.36-.008-.552-.008s-.504.072-.768.36c-.264.288-1.008.984-1.008 2.4s1.032 2.784 1.176 2.976c.144.192 1.992 3.048 4.824 4.272.672.288 1.2.456 1.608.6.672.24 1.288.216 1.776.144.552-.072 1.704-.696 1.944-1.368.24-.672.24-1.248.168-1.368-.072-.12-.264-.192-.552-.336z"/></svg>
         Order via WhatsApp
       </a>
     </div>
@@ -861,37 +805,37 @@
 <!-- ─── STATS ─────────────────────────────────────── -->
 <div class="container">
   <div class="stats-bar">
-    <div class="stat-item"><div class="stat-number">10K+</div><div class="stat-label">Orders Completed</div></div>
-    <div class="stat-item"><div class="stat-number">4</div><div class="stat-label">Networks Supported</div></div>
-    <div class="stat-item"><div class="stat-number">&lt; 30s</div><div class="stat-label">Avg. Delivery Time</div></div>
-    <div class="stat-item"><div class="stat-number">⭐ 4.9</div><div class="stat-label">Customer Rating</div></div>
+    <div class="stat-item"><div class="stat-number" id="countOrders">10K+</div><div class="stat-label">Orders Completed</div></div>
+    <div class="stat-item"><div class="stat-number">4</div><div class="stat-label">Networks</div></div>
+    <div class="stat-item"><div class="stat-number">&lt; 30s</div><div class="stat-label">Avg. Delivery</div></div>
+    <div class="stat-item"><div class="stat-number">⭐ 4.9</div><div class="stat-label">Rating</div></div>
   </div>
 </div>
 
 <!-- ─── NETWORKS ──────────────────────────────────── -->
 <div class="container" id="networks">
   <div class="section-header">
-    <h2>Choose Your Network</h2>
-    <p>Select a network to view all available data plans and pricing</p>
+    <h2>Choose your network</h2>
+    <p>Select a network to browse all available data plans</p>
   </div>
-  <div class="network-grid" id="networkGrid">
+  <div class="network-grid">
     <div class="network-card network-mtn active" data-network="mtn" onclick="selectNetwork('mtn')">
       <span class="network-badge badge-popular">Most Popular</span>
       <div class="network-icon">MTN</div>
       <h3>MTN Ghana</h3>
-      <p>Data bundles, voice &amp; social plans</p>
+      <p>Data, voice &amp; social bundles</p>
       <span class="plan-count">14 plans</span>
     </div>
     <div class="network-card network-vodafone" data-network="vodafone" onclick="selectNetwork('vodafone')">
       <div class="network-icon">VDF</div>
       <h3>Vodafone Ghana</h3>
-      <p>4G LTE data &amp; voice bundles</p>
+      <p>4G LTE &amp; voice bundles</p>
       <span class="plan-count">8 plans</span>
     </div>
     <div class="network-card network-airteltigo" data-network="airteltigo" onclick="selectNetwork('airteltigo')">
       <div class="network-icon">A·T</div>
       <h3>AirtelTigo</h3>
-      <p>Affordable data &amp; social bundles</p>
+      <p>Affordable data &amp; social</p>
       <span class="plan-count">10 plans</span>
     </div>
     <div class="network-card network-glo" data-network="glo" onclick="selectNetwork('glo')">
@@ -912,44 +856,76 @@
   <div class="pricing-section" id="gloPricing"></div>
 </div>
 
+<!-- ─── TESTIMONIALS ───────────────────────────────── -->
+<div class="container">
+  <div class="section-header">
+    <h2>Trusted by thousands</h2>
+    <p>Here's what our customers say</p>
+  </div>
+  <div class="testimonials">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Fastest data delivery in Accra. I ordered at midnight and got my bundle in less than 30 seconds."</blockquote>
+      <div class="author">
+        <div class="author-avatar">K</div>
+        <div class="author-info">
+          <div class="author-name">Kwame A.</div>
+          <div class="author-location">Accra</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Best prices for MTN bundles I've found anywhere. Been using ConnectFast for 6 months now."</blockquote>
+      <div class="author">
+        <div class="author-avatar">A</div>
+        <div class="author-info">
+          <div class="author-name">Abena O.</div>
+          <div class="author-location">Kumasi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ─── TRACK YOUR ORDER ──────────────────────────── -->
 <div class="container" id="track">
   <div class="section-header">
-    <h2>Track Your Order</h2>
+    <h2>Track your order</h2>
     <p>Enter your phone number to check your order status</p>
   </div>
   <div class="track-section">
     <div class="track-card">
-      <h3>📦 Order Status</h3>
-      <p>Enter the phone number you ordered with and we'll show you the latest status.</p>
+      <h3>📦 Order status</h3>
+      <p>Enter the number you used to order and we'll pull up the latest update.</p>
       <div class="track-form">
         <input type="tel" id="trackPhone" placeholder="e.g. 055 123 4567" maxlength="15">
-        <button class="btn-primary" onclick="trackOrder()">🔍 Check Status</button>
+        <button class="btn-primary" onclick="trackOrder()">🔍 Check status</button>
       </div>
       <div class="track-result" id="trackResult">
-        <div style="font-weight:600;margin-bottom:12px;text-align:left;font-size:0.9rem">Order for <span id="trackPhoneDisplay"></span></div>
+        <div style="font-weight:600;margin-bottom:12px;text-align:left;font-size:0.88rem">Order for <span id="trackPhoneDisplay"></span></div>
         <div class="status-row">
           <div class="status-dot delivered"></div>
-          <div style="flex:1;text-align:left"><strong>Order Placed</strong><br><span style="font-size:0.76rem;color:var(--text-muted)">Your order has been submitted</span></div>
-          <span style="font-size:0.76rem;color:var(--text-muted)">✓ Completed</span>
+          <div style="flex:1;text-align:left"><strong>Order placed</strong><br><span style="font-size:0.75rem;color:var(--text-secondary)">Submitted successfully</span></div>
+          <span style="font-size:0.75rem;color:var(--text-muted)">✓ Completed</span>
         </div>
         <div class="status-row">
           <div class="status-dot delivered"></div>
-          <div style="flex:1;text-align:left"><strong>Payment Confirmed</strong><br><span style="font-size:0.76rem;color:var(--text-muted)">Payment received via Mobile Money</span></div>
-          <span style="font-size:0.76rem;color:var(--text-muted)">✓ Completed</span>
+          <div style="flex:1;text-align:left"><strong>Payment confirmed</strong><br><span style="font-size:0.75rem;color:var(--text-secondary)">Mobile Money received</span></div>
+          <span style="font-size:0.75rem;color:var(--text-muted)">✓ Completed</span>
         </div>
         <div class="status-row">
           <div class="status-dot processing"></div>
-          <div style="flex:1;text-align:left"><strong>Processing Delivery</strong><br><span style="font-size:0.76rem;color:var(--text-muted)">Data bundle being sent to your line</span></div>
-          <span style="font-size:0.76rem;color:var(--accent)">In Progress</span>
+          <div style="flex:1;text-align:left"><strong>Processing delivery</strong><br><span style="font-size:0.75rem;color:var(--text-secondary)">Sending bundle to your line</span></div>
+          <span style="font-size:0.75rem;color:var(--accent)">In progress</span>
         </div>
         <div class="status-row">
           <div class="status-dot pending"></div>
-          <div style="flex:1;text-align:left"><strong>Data Activated</strong><br><span style="font-size:0.76rem;color:var(--text-muted)">Bundle loaded on your SIM</span></div>
-          <span style="font-size:0.76rem;color:var(--text-muted)">Pending</span>
+          <div style="flex:1;text-align:left"><strong>Data activated</strong><br><span style="font-size:0.75rem;color:var(--text-secondary)">Bundle loaded on SIM</span></div>
+          <span style="font-size:0.75rem;color:var(--text-muted)">Pending</span>
         </div>
-        <div style="margin-top:12px;padding:10px;border-radius:var(--radius-xs);background:var(--accent-subtle);font-size:0.82rem;color:var(--text-muted);text-align:left">
-          💡 Expected delivery within 30 seconds. Contact us on WhatsApp if delayed.
+        <div style="margin-top:12px;padding:10px;border-radius:var(--radius-sm);background:var(--accent-subtle);font-size:0.8rem;color:var(--text-secondary);text-align:left">
+          💡 Delivery within 30 seconds. WhatsApp us if delayed.
         </div>
       </div>
     </div>
@@ -964,24 +940,24 @@
   </div>
   <div class="features">
     <div class="feature-card">
-      <div class="feature-icon" style="background:var(--accent-subtle);color:var(--accent);">⚡</div>
-      <h3>Instant Delivery</h3>
-      <p>Data and airtime delivered to your phone in under 30 seconds. No delays, no excuses.</p>
+      <div class="feature-icon" style="background:var(--accent-subtle);color:var(--badge-text);">⚡</div>
+      <h3>Instant delivery</h3>
+      <p>Data delivered in under 30 seconds. No waiting, no delays.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon" style="background:var(--accent-subtle);color:var(--accent);">💰</div>
-      <h3>Best Prices in Ghana</h3>
-      <p>We work directly with networks to bring you the lowest rates. Price match guaranteed.</p>
+      <div class="feature-icon" style="background:var(--accent-subtle);color:var(--badge-text);">💰</div>
+      <h3>Best prices</h3>
+      <p>Direct network partnerships mean the lowest rates in Ghana.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon" style="background:var(--accent-subtle);color:var(--accent);">📱</div>
-      <h3>All Networks</h3>
-      <p>MTN, Vodafone, AirtelTigo, and Glo — one place for every Ghanaian mobile network.</p>
+      <div class="feature-icon" style="background:var(--accent-subtle);color:var(--badge-text);">📱</div>
+      <h3>All networks</h3>
+      <p>MTN, Vodafone, AirtelTigo &amp; Glo — one place for all.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon" style="background:var(--accent-subtle);color:var(--accent);">🛡️</div>
-      <h3>24/7 Support</h3>
-      <p>Order anytime. Our team is on WhatsApp around the clock to help with any issues.</p>
+      <div class="feature-icon" style="background:var(--accent-subtle);color:var(--badge-text);">🛡️</div>
+      <h3>24/7 support</h3>
+      <p>Order anytime. WhatsApp support available around the clock.</p>
     </div>
   </div>
 </div>
@@ -989,44 +965,44 @@
 <!-- ─── FAQ ────────────────────────────────────────── -->
 <div class="container" id="faq">
   <div class="section-header">
-    <h2>Frequently Asked</h2>
-    <p>Everything you need to know about ordering data on ConnectFast</p>
+    <h2>Frequently asked</h2>
+    <p>Everything you need to know</p>
   </div>
   <div class="faq-section">
     <div class="faq-item open">
       <div class="faq-question" onclick="toggleFaq(this)">
-        How do I receive the data after purchase?
+        How do I receive data after purchase?
         <span class="faq-arrow">▼</span>
       </div>
-      <div class="faq-answer">Data is delivered directly to your phone number within 30 seconds of payment confirmation. You'll receive an SMS from your network confirming the bundle has been activated.</div>
+      <div class="faq-answer">Data is sent directly to your phone within 30 seconds of payment. You'll get an SMS from your network confirming activation.</div>
     </div>
     <div class="faq-item">
       <div class="faq-question" onclick="toggleFaq(this)">
         What payment methods do you accept?
         <span class="faq-arrow">▼</span>
       </div>
-      <div class="faq-answer">We accept Mobile Money (MTN MoMo, Vodafone Cash, AirtelTigo Money), bank transfers, and PayPal. All payments are processed instantly.</div>
+      <div class="faq-answer">Mobile Money (MTN MoMo, Vodafone Cash, AirtelTigo Money), bank transfers, and PayPal. All processed instantly.</div>
     </div>
     <div class="faq-item">
       <div class="faq-question" onclick="toggleFaq(this)">
         Can I buy data for someone else?
         <span class="faq-arrow">▼</span>
       </div>
-      <div class="faq-answer">Absolutely! Just provide the recipient's phone number when ordering. We'll send the data directly to their line.</div>
+      <div class="faq-answer">Absolutely. Just provide the recipient's number when ordering. We'll deliver directly to their line.</div>
     </div>
     <div class="faq-item">
       <div class="faq-question" onclick="toggleFaq(this)">
         What if my data doesn't arrive?
         <span class="faq-arrow">▼</span>
       </div>
-      <div class="faq-answer">It's extremely rare, but if it happens, contact us on WhatsApp and we'll resolve it within minutes. We have a 100% delivery guarantee.</div>
+      <div class="faq-answer">Extremely rare, but if it happens, message us on WhatsApp and we'll resolve it within minutes. 100% delivery guarantee.</div>
     </div>
     <div class="faq-item">
       <div class="faq-question" onclick="toggleFaq(this)">
-        Do your plans auto-renew?
+        Do plans auto-renew?
         <span class="faq-arrow">▼</span>
       </div>
-      <div class="faq-answer">No, none of our plans auto-renew. You only buy when you need it. Plans expire at the end of their validity period.</div>
+      <div class="faq-answer">No. You only buy when you need it. All plans expire at the end of their validity period with no auto-renewal.</div>
     </div>
   </div>
 </div>
@@ -1040,24 +1016,22 @@
       <a onclick="showHome(); scrollToSection('networks')">Networks</a>
       <a onclick="scrollToSection('track')">Track Order</a>
       <a onclick="scrollToSection('faq')">FAQ</a>
-      <a href="https://wa.me/233257810481" target="_blank">Contact Us</a>
+      <a href="https://wa.me/233257810481" target="_blank">Contact</a>
     </div>
     <a href="https://wa.me/233257810481" target="_blank" class="footer-whatsapp">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.137.564 4.157 1.638 5.968L.344 23.656l5.688-1.294A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6a9.54 9.54 0 01-4.88-1.376l-.35-.21-3.38.768.72-3.28-.228-.364A9.558 9.558 0 012.4 12c0-5.292 4.308-9.6 9.6-9.6s9.6 4.308 9.6 9.6-4.308 9.6-9.6 9.6zm5.256-7.224c-.288-.144-1.704-.84-1.968-.936-.264-.096-.456-.144-.648.144-.192.288-.744.936-.912 1.128-.168.192-.336.216-.624.072-.288-.144-1.216-.448-2.316-1.432-.856-.768-1.432-1.712-1.6-2.004-.168-.288-.02-.44.128-.584.132-.132.288-.336.432-.504.144-.168.192-.288.288-.48.096-.192.048-.36-.024-.504-.072-.144-.648-1.56-.888-2.136-.24-.576-.48-.48-.648-.48-.168-.008-.36-.008-.552-.008s-.504.072-.768.36c-.264.288-1.008.984-1.008 2.4s1.032 2.784 1.176 2.976c.144.192 1.992 3.048 4.824 4.272.672.288 1.2.456 1.608.6.672.24 1.288.216 1.776.144.552-.072 1.704-.696 1.944-1.368.24-.672.24-1.248.168-1.368-.072-.12-.264-.192-.552-.336z"/></svg>
-      Order on WhatsApp → +233 25 781 0481
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.137.564 4.157 1.638 5.968L.344 23.656l5.688-1.294A11.938 11.938 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.6a9.54 9.54 0 01-4.88-1.376l-.35-.21-3.38.768.72-3.28-.228-.364A9.558 9.558 0 012.4 12c0-5.292 4.308-9.6 9.6-9.6s9.6 4.308 9.6 9.6-4.308 9.6-9.6 9.6zm5.256-7.224c-.288-.144-1.704-.84-1.968-.936-.264-.096-.456-.144-.648.144-.192.288-.744.936-.912 1.128-.168.192-.336.216-.624.072-.288-.144-1.216-.448-2.316-1.432-.856-.768-1.432-1.712-1.6-2.004-.168-.288-.02-.44.128-.584.132-.132.288-.336.432-.504.144-.168.192-.288.288-.48.096-.192.048-.36-.024-.504-.072-.144-.648-1.56-.888-2.136-.24-.576-.48-.48-.648-.48-.168-.008-.36-.008-.552-.008s-.504.072-.768.36c-.264.288-1.008.984-1.008 2.4s1.032 2.784 1.176 2.976c.144.192 1.992 3.048 4.824 4.272.672.288 1.2.456 1.608.6.672.24 1.288.216 1.776.144.552-.072 1.704-.696 1.944-1.368.24-.672.24-1.248.168-1.368-.072-.12-.264-.192-.552-.336z"/></svg>
+      +233 25 781 0481
     </a>
-    <p style="margin-top:20px;font-size:0.72rem;color:var(--text-dim);">© 2026 ConnectFast GH. All rights reserved.</p>
+    <p style="margin-top:20px;font-size:0.72rem;color:var(--text-muted);">© 2026 ConnectFast GH</p>
   </div>
 </footer>
 
-<!-- ─── TOAST ──────────────────────────────────────── -->
 <div class="toast" id="toast">
   <span class="toast-icon">✅</span>
   <span id="toastMsg"></span>
 </div>
 
 <script>
-// ─── DATA ───────────────────────────────────────────────────────────
 const plans = {
   mtn: [
     { data: '500MB', price: 2.00, type: 'Daily', validity: '24 hours', tag: 'daily', features: ['4G LTE speed', 'Valid 24h', 'Auto-disable'] },
@@ -1108,13 +1082,12 @@ const plans = {
 };
 
 const networkColors = {
-  mtn: { accent: '#E8A000', bg: 'rgba(232,160,0,0.06)' },
+  mtn: { accent: '#D4A017', bg: 'rgba(212,160,23,0.06)' },
   vodafone: { accent: '#E60000', bg: 'rgba(230,0,0,0.06)' },
   airteltigo: { accent: '#ED1C24', bg: 'rgba(237,28,36,0.06)' },
   glo: { accent: '#00ADEF', bg: 'rgba(0,173,239,0.06)' },
 };
 
-// ─── RENDER ─────────────────────────────────────────────────────────
 function renderPlans(network) {
   const section = document.getElementById(`${network}Pricing`);
   const data = plans[network];
@@ -1125,7 +1098,7 @@ function renderPlans(network) {
   section.innerHTML = `
     <div class="pricing-header">
       <div class="pricing-header-left">
-        <button class="back-btn" onclick="showHome()" title="Back to networks">←</button>
+        <button class="back-btn" onclick="showHome()" title="Back">←</button>
         <h2>${networkName}</h2>
         <span class="network-chip" style="background:${netColor.bg};color:${netColor.accent}">${data.length} plans</span>
       </div>
@@ -1143,16 +1116,8 @@ function renderPlans(network) {
           <div class="plan-data">${p.data}</div>
           <div class="plan-type">${p.type} Bundle</div>
           <div class="plan-details">
-            <div class="plan-detail">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              ${p.validity}
-            </div>
-            ${p.features.map(f => `
-              <div class="plan-detail">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                ${f}
-              </div>
-            `).join('')}
+            <div class="plan-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${p.validity}</div>
+            ${p.features.map(f => `<div class="plan-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${f}</div>`).join('')}
           </div>
           <div class="plan-price-row">
             <div class="plan-price"><span class="currency">GH₵</span> ${p.price.toFixed(2)}</div>
@@ -1160,8 +1125,7 @@ function renderPlans(network) {
           <button class="plan-buy" onclick="buyPlan('${network}', '${p.data}', ${p.price})">Buy Now</button>
         </div>
       `).join('')}
-    </div>
-  `;
+    </div>`;
 }
 
 function filterPlans(network, tag) {
@@ -1189,88 +1153,68 @@ function buyPlan(network, data, price) {
   const networkName = { mtn:'MTN', vodafone:'Vodafone', airteltigo:'AirtelTigo', glo:'Glo' }[network];
   const msg = encodeURIComponent(`Hi ConnectFast! I want to buy:\n\n📡 Network: ${networkName}\n📦 Plan: ${data}\n💰 Price: GH₵ ${price.toFixed(2)}\n\nPlease send delivery instructions.`);
   window.open(`https://wa.me/233257810481?text=${msg}`, '_blank');
-  showToast(`Redirecting to WhatsApp for ${networkName} ${data} — GH₵${price.toFixed(2)}`);
+  showToast(`Redirecting to WhatsApp — ${networkName} ${data}`);
 }
 
-// ─── TRACK ORDER ────────────────────────────────────────────────────
 function trackOrder() {
   const phone = document.getElementById('trackPhone').value.trim();
-  if (!phone) {
-    showToast('⚠️ Please enter your phone number');
-    return;
-  }
+  if (!phone) { showToast('⚠️ Enter your phone number'); return; }
   document.getElementById('trackPhoneDisplay').textContent = phone;
   document.getElementById('trackResult').classList.add('show');
-  showToast(`📦 Showing order status for ${phone}`);
+  showToast(`📦 Order status for ${phone}`);
   document.getElementById('trackResult').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-// ─── THEME ──────────────────────────────────────────────────────────
 function getPreferredTheme() {
   const saved = localStorage.getItem('connectfast-theme');
   if (saved) return saved;
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
-
 function applyTheme(theme) {
-  const html = document.documentElement;
-  html.setAttribute('data-theme', theme);
+  document.documentElement.setAttribute('data-theme', theme);
   document.getElementById('themeBtn').textContent = theme === 'dark' ? '🌙' : '☀️';
   localStorage.setItem('connectfast-theme', theme);
 }
-
 function toggleTheme() {
-  const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme') !== 'light';
+  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
   applyTheme(isDark ? 'light' : 'dark');
   showToast(isDark ? '☀️ Light mode' : '🌙 Dark mode');
 }
-
 function initTheme() {
   applyTheme(getPreferredTheme());
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (!localStorage.getItem('connectfast-theme')) {
-      applyTheme(e.matches ? 'dark' : 'light');
-    }
+    if (!localStorage.getItem('connectfast-theme')) applyTheme(e.matches ? 'dark' : 'light');
   });
 }
 
-// ─── HAMBURGER ──────────────────────────────────────────────────────
 function toggleMobileMenu() {
   document.getElementById('hamburger').classList.toggle('open');
   document.getElementById('mobileMenu').classList.toggle('open');
   document.getElementById('menuOverlay').classList.toggle('open');
   document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
 }
-
 function closeMobileMenu() {
   document.getElementById('hamburger').classList.remove('open');
   document.getElementById('mobileMenu').classList.remove('open');
   document.getElementById('menuOverlay').classList.remove('open');
   document.body.style.overflow = '';
 }
-
 function scrollToSection(id) {
   closeMobileMenu();
   setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 120);
 }
 
-// ─── TOAST ──────────────────────────────────────────────────────────
 function showToast(msg) {
-  const toast = document.getElementById('toast');
+  const t = document.getElementById('toast');
   document.getElementById('toastMsg').textContent = msg;
-  toast.classList.add('show');
-  clearTimeout(toast._timeout);
-  toast._timeout = setTimeout(() => toast.classList.remove('show'), 3000);
+  t.classList.add('show');
+  clearTimeout(t._timeout);
+  t._timeout = setTimeout(() => t.classList.remove('show'), 3000);
 }
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
 
-function toggleFaq(el) {
-  el.parentElement.classList.toggle('open');
-}
-
-// ─── INIT ───────────────────────────────────────────────────────────
 initTheme();
-['mtn', 'vodafone', 'airteltigo', 'glo'].forEach(renderPlans);
+['mtn','vodafone','airteltigo','glo'].forEach(renderPlans);
 </script>
 </body>
 </html>
