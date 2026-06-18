@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KEM Data Plug — Buy Data Online</title>
+  <meta property="og:title" content="KEM Data Plug — Buy Data Online">
+  <meta property="og:description" content="Instant data bundles for MTN, Vodafone &amp; AirtelTigo. Order on WhatsApp and get connected in seconds.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://damgeed.github.io/connectfast-gh/">
+  <meta property="og:site_name" content="KEM Data Plug">
+  <meta name="theme-color" content="#FFFAF5" id="themeColor">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.svg">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -431,6 +441,19 @@
       touch-action: manipulation;
     }
     .pricing-card .buy-btn:hover { transform: scale(1.06); }
+    .pricing-card .buy-btn:active { transform: scale(0.97); }
+    
+    .pricing-card { position: relative; }
+    .pricing-card.best-value { border-color: var(--accent-border); background: var(--accent-gradient-soft); }
+    .pricing-card.best-value::after { content: 'Best Value'; position: absolute; top: -8px; right: 10px; padding: 2px 10px; border-radius: 100px; background: var(--accent-gradient); color: #1A1410; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.3px; box-shadow: 0 2px 8px rgba(245,166,35,0.3); }
+
+    .pricing-filter { margin-bottom: 14px; }
+    .pricing-filter input { width: 100%; padding: 10px 16px; border-radius: 30px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 0.85rem; font-family: var(--font); outline: none; transition: border 0.15s; }
+    .pricing-filter input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-subtle); }
+    .pricing-filter input::placeholder { color: var(--placeholder); }
+    .pricing-filter input.highlight-empty { border-color: var(--red); }
+    .pricing-card.filter-hidden { display: none; }
+    .pricing-card.filter-matched { animation: fadeUp 0.25s ease-out; }
 
     .pricing-card .plan-badge {
       display: inline-block;
@@ -495,6 +518,21 @@
 
     /* ─── TRACK ORDER ────────────────────────────────────── */
     .track-section { margin-bottom: 48px; }
+
+    /* ─── FAQ ──────────────────────────────────────────── */
+    .faq-list { max-width: 550px; margin: 0 auto 48px; display: flex; flex-direction: column; gap: 8px; }
+    .faq-item { border-radius: var(--radius-lg); background: var(--bg-card); border: 1px solid var(--border); overflow: hidden; transition: border 0.15s; }
+    .faq-item:hover { border-color: var(--border-hover); }
+    .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; cursor: pointer; font-weight: 500; font-size: 0.88rem; user-select: none; transition: background 0.15s; touch-action: manipulation; }
+    .faq-question:hover { background: var(--surface); }
+    .faq-arrow { color: var(--text-muted); font-size: 0.75rem; transition: transform 0.25s ease; flex-shrink: 0; }
+    .faq-item.open .faq-arrow { transform: rotate(180deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.16,1,0.3,1), padding 0.3s ease; padding: 0 20px; color: var(--text-secondary); font-size: 0.82rem; line-height: 1.7; }
+    .faq-item.open .faq-answer { max-height: 200px; padding: 0 20px 16px; }
+
+    /* ─── SCROLL ANIMATIONS ─────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
     .track-card {
       max-width: 440px; margin: 0 auto;
       padding: 28px; border-radius: var(--radius-xl);
@@ -570,6 +608,27 @@
     }
     .toast.show { transform: translateY(0); opacity: 1; }
 
+    /* ─── INSTALL BANNER ─────────────────────────────────── */
+    .install-banner {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 20px; background: var(--bg-card); border-top: 1px solid var(--border);
+      font-size: 0.85rem; font-weight: 500;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+      backdrop-filter: blur(14px);
+    }
+    .install-banner span { flex: 1; }
+    .install-banner button {
+      padding: 8px 20px; border-radius: 30px; border: none;
+      background: var(--accent-gradient); color: #1A1410;
+      font-weight: 600; font-size: 0.78rem; cursor: pointer;
+      white-space: nowrap; touch-action: manipulation;
+    }
+    .install-banner button:hover { transform: scale(1.04); }
+    .install-banner .install-dismiss {
+      background: transparent; color: var(--text-muted); padding: 4px 8px; font-size: 0.9rem;
+    }
+
     /* ─── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 768px) {
       html, body { overflow-x: hidden; width: 100%; }
@@ -602,6 +661,8 @@
       .pricing-card .plan-desc { font-size: 0.7rem; margin-bottom: 10px; }
       .pricing-card .plan-price { font-size: 0.88rem; }
       .pricing-card .buy-btn { padding: 5px 14px; font-size: 0.7rem; }
+      .pricing-filter input { padding: 8px 14px; font-size: 0.8rem; }
+      .faq-question { padding: 14px 16px; font-size: 0.82rem; }
       .track-card { padding: 20px; }
       .section-header h2 { font-size: 1.2rem; }
     }
@@ -680,7 +741,7 @@
 </section>
 
 <!-- ─── STATS ─────────────────────────────────────── -->
-<div class="container">
+<div class="container reveal" id="stats">
   <div class="stats-bar">
     <div class="stat-item"><div class="stat-number">5K+</div><div class="stat-label">Happy Customers</div></div>
     <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">Networks</div></div>
@@ -690,7 +751,7 @@
 </div>
 
 <!-- ─── NETWORKS ──────────────────────────────────── -->
-<div class="container" id="networks">
+<div class="container reveal" id="networks">
   <div class="section-header">
     <h2>Pick your network</h2>
     <p>Choose which network you want to top up</p>
@@ -730,7 +791,7 @@
 </div>
 
 <!-- ─── about ─────────────────────────────────────── -->
-<div class="container" id="about">
+<div class="container reveal" id="about">
   <div class="section-header">
     <h2>A little about us</h2>
     <p>We keep things simple — data delivered fast, fair prices, no stress</p>
@@ -748,7 +809,7 @@
 </div>
 
 <!-- ─── TRACK ORDER ──────────────────────────────── -->
-<div class="container" id="track">
+<div class="container reveal" id="track">
   <div class="section-header">
     <h2>Track your order</h2>
     <p>Enter your number and we'll check the status for you</p>
@@ -793,7 +854,7 @@
 </div>
 
 <!-- ─── FEATURES ──────────────────────────────────── -->
-<div class="container">
+<div class="container reveal">
   <div class="section-header">
     <h2>Why people choose us</h2>
     <p>No fluff, just data that works</p>
@@ -813,6 +874,44 @@
       <div class="feature-icon" style="background:var(--accent-subtle);color:var(--badge-text);">💬</div>
       <h3>Real person support</h3>
       <p>Message us anytime. A real human reads and replies — not a bot.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FAQ ────────────────────────────────────────── -->
+<div class="container reveal">
+  <div class="section-header">
+    <h2>Frequently asked</h2>
+    <p>Quick answers to common questions</p>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>How fast is the delivery?</span>
+        <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-answer">Most orders are delivered in under 30 seconds. If there's a delay, message us on WhatsApp and we'll sort it out immediately.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>What payment methods do you accept?</span>
+        <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-answer">We accept Mobile Money (MTN MoMo, Vodafone Cash, AirtelTigo Money). Just place your order and we'll send payment details on WhatsApp.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>Do you sell airtime too?</span>
+        <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-answer">No — we only sell data bundles. Airtime is not available. Pure data, no fluff.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>Can I buy for someone else's number?</span>
+        <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-answer">Yes! Just let us know the number you want the data sent to when you message us on WhatsApp. We'll load it on any MTN, Vodafone, or AirtelTigo line.</div>
     </div>
   </div>
 </div>
@@ -839,6 +938,12 @@
 <div class="toast" id="toast">
   <span class="toast-icon">✅</span>
   <span id="toastMsg"></span>
+</div>
+
+<div class="install-banner" id="installBanner" style="display:none">
+  <span>📲 Install KEM Data Plug on your phone</span>
+  <button onclick="installPWA()">Install</button>
+  <button class="install-dismiss" onclick="document.getElementById('installBanner').style.display='none'">✕</button>
 </div>
 
 <script>
@@ -880,10 +985,16 @@ function renderPlans(network) {
         <span class="network-chip" style="background:${netColor.bg};color:${netColor.accent}">${pricingData.length} plans</span>
       </div>
     </div>
-    <div class="pricing-table">
-      ${pricingData.map(p => `
-        <div class="pricing-card" onclick="buyPlan('${network}', '${p.data}', ${p.price})">
-          <span class="plan-badge ${p.badgeClass}">${p.badge}</span>
+    <div class="pricing-filter">
+      <input type="text" id="${network}Filter" placeholder="🔍 Search by GB (e.g. 5, 10, 50)" oninput="filterPlans('${network}')">
+    </div>
+    <div class="pricing-table" id="${network}Table">
+      ${pricingData.map(p => {
+        const gbVal = parseInt(p.data.replace('GB',''));
+        const isBest = gbVal === bestValueGb;
+        return `
+        <div class="pricing-card${isBest?' best-value':''}" onclick="buyPlan('${network}', '${p.data}', ${p.price})">
+          <span class="plan-badge ${p.badgeClass}">${isBest ? '🏆 '+p.badge : p.badge}</span>
           <div class="plan-gb">${p.data.replace('GB','')}<span class="gb-label">GB</span></div>
           <div class="plan-desc">${p.desc}</div>
           <div class="plan-bottom">
@@ -893,6 +1004,33 @@ function renderPlans(network) {
         </div>
       `).join('')}
     </div>`;
+}
+
+// Best value = highest GB per GH₵ (largest plan / its price ratio)
+const bestValueGb = pricingData.reduce((best, p) => {
+  const gb = parseInt(p.data.replace('GB',''));
+  const ratio = gb / p.price;
+  return ratio > best.ratio ? { gb, ratio } : best;
+}, { gb: pricingData[0] ? parseInt(pricingData[0].data.replace('GB','')) : 1, ratio: 0 }).gb;
+
+function filterPlans(network) {
+  const input = document.getElementById(`${network}Filter`);
+  const table = document.getElementById(`${network}Table`);
+  const q = input.value.trim().toLowerCase();
+  const cards = table.querySelectorAll('.pricing-card');
+  let found = false;
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    if (!q || text.includes(q)) {
+      card.classList.remove('filter-hidden');
+      if (q) card.classList.add('filter-matched');
+      if (text.includes(q)) found = true;
+    } else {
+      card.classList.add('filter-hidden');
+      card.classList.remove('filter-matched');
+    }
+  });
+  input.classList.toggle('highlight-empty', q !== '' && !found);
 }
 
 function selectNetwork(network) {
@@ -941,6 +1079,7 @@ function getPreferredTheme() {
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   document.getElementById('themeBtn').textContent = theme === 'dark' ? '🌙' : '☀️';
+  document.getElementById('themeColor').content = theme === 'dark' ? '#0E0C0A' : '#FFFAF5';
   localStorage.setItem('kemdp-theme', theme);
 }
 function toggleTheme() {
@@ -982,6 +1121,35 @@ function showToast(msg) {
 function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
 
 initTheme();
+
+// Scroll entrance animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Service Worker for PWA
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+// PWA Install Prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const banner = document.getElementById('installBanner');
+  if (banner) banner.style.display = 'flex';
+});
+function installPWA() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => {
+    deferredPrompt = null;
+    document.getElementById('installBanner').style.display = 'none';
+  });
+}
+
 ['mtn','vodafone','airteltigo'].forEach(renderPlans);
 </script>
 </body>

@@ -1,0 +1,22 @@
+{
+  "name": "KEM Data Plug",
+  "short_name": "KEM Data",
+  "description": "Instant data bundles for MTN, Vodafone & AirtelTigo",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#FFFAF5",
+  "theme_color": "#FFFAF5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
