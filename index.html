@@ -15,6 +15,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.svg">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://js.paystack.co/v1/inline.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-text-size-adjust: 100%; }
@@ -629,6 +630,112 @@
       background: transparent; color: var(--text-muted); padding: 4px 8px; font-size: 0.9rem;
     }
 
+    /* ─── PAYMENT MODAL ─────────────────────────────────── */
+    .modal-backdrop {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 500;
+      background: var(--overlay);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1; pointer-events: auto;
+    }
+    body.modal-open { overflow: hidden; }
+
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      max-width: 400px; width: 100%;
+      padding: 28px;
+      box-shadow: var(--shadow-xl);
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .modal-backdrop.open .modal-card {
+      transform: translateY(0);
+    }
+    .modal-close {
+      position: absolute; top: 14px; right: 14px;
+      width: 32px; height: 32px; border-radius: 50%;
+      border: none; background: transparent;
+      color: var(--text-muted); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; transition: all 0.15s;
+      touch-action: manipulation;
+    }
+    .modal-close:hover { background: var(--surface); color: var(--text); }
+
+    .modal-card h2 {
+      font-family: var(--display);
+      font-size: 1.2rem; font-weight: 700;
+      margin-bottom: 4px; letter-spacing: -0.01em;
+    }
+    .modal-card .modal-sub {
+      color: var(--text-secondary);
+      font-size: 0.82rem; margin-bottom: 20px;
+    }
+    .modal-plan-summary {
+      display: flex; justify-content: space-between;
+      padding: 12px 16px; border-radius: var(--radius-sm);
+      background: var(--surface); margin-bottom: 20px;
+      border: 1px solid var(--accent-border);
+    }
+    .modal-plan-summary .plan-left {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .modal-plan-summary .plan-left .plan-label {
+      font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .modal-plan-summary .plan-left .plan-name {
+      font-size: 0.9rem; font-weight: 600;
+    }
+    .modal-plan-summary .plan-right {
+      display: flex; align-items: center;
+      font-size: 1.2rem; font-weight: 700; font-family: var(--display);
+      color: var(--accent);
+    }
+
+    .modal-form { display: flex; flex-direction: column; gap: 12px; }
+    .modal-form label {
+      font-size: 0.78rem; font-weight: 500;
+      color: var(--text-secondary); margin-bottom: -4px;
+    }
+    .modal-form input {
+      width: 100%; padding: 11px 16px; border-radius: 30px;
+      border: 1px solid var(--input-border); background: var(--input-bg);
+      color: var(--input-text); font-size: 0.88rem; font-family: var(--font);
+      outline: none; transition: border 0.15s;
+      touch-action: manipulation;
+    }
+    .modal-form input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-subtle); }
+    .modal-form input::placeholder { color: var(--placeholder); }
+    .modal-form .btn-primary {
+      width: 100%; justify-content: center; margin-top: 8px;
+    }
+    .modal-form .btn-primary:disabled {
+      opacity: 0.6; cursor: not-allowed; transform: none;
+    }
+
+    /* Payment status */
+    .payment-status {
+      display: none; text-align: center; padding: 8px 0;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .status-spinner {
+      width: 40px; height: 40px; margin: 0 auto;
+      border: 3px solid var(--border); border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
     /* ─── RESPONSIVE ───────────────────────────────────────── */
     @media (max-width: 768px) {
       html, body { overflow-x: hidden; width: 100%; }
@@ -935,6 +1042,37 @@
   </div>
 </footer>
 
+<!-- ─── PAYMENT MODAL ─────────────────────────────── -->
+<div class="modal-backdrop" id="paymentModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closePaymentModal()">✕</button>
+    <h2>📡 Confirm Order</h2>
+    <p class="modal-sub">Review your plan and enter your details</p>
+    <div class="modal-plan-summary">
+      <div class="plan-left">
+        <span class="plan-label">Plan</span>
+        <span class="plan-name" id="paymentNetwork">MTN</span>
+        <span style="font-size:0.82rem;color:var(--text-secondary)" id="paymentPlan">2GB</span>
+      </div>
+      <div class="plan-right">
+        <span id="paymentAmount">GH₵ 10</span>
+      </div>
+    </div>
+    <div class="modal-form" id="paymentForm">
+      <label for="payRecipientPhone">Recipient phone number *</label>
+      <input type="tel" id="payRecipientPhone" placeholder="054 036 3205" maxlength="15" inputmode="numeric" autocomplete="tel">
+      <label for="payPayerPhone">Your phone number (optional)</label>
+      <input type="tel" id="payPayerPhone" placeholder="Same as above if blank" maxlength="15" inputmode="numeric" autocomplete="tel">
+      <label for="payEmail">Email address (receipt)</label>
+      <input type="email" id="payEmail" placeholder="for payment receipt" autocomplete="email">
+      <button class="btn-primary" id="payBtn" onclick="proceedToPayment()">
+        Proceed to Payment
+      </button>
+    </div>
+    <div class="payment-status" id="paymentStatus"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast">
   <span class="toast-icon">✅</span>
   <span id="toastMsg"></span>
@@ -1054,12 +1192,159 @@ function showHome() {
 }
 
 function buyPlan(network, data, price) {
-  const networkName = { mtn:'MTN', vodafone:'Vodafone', airteltigo:'AirtelTigo' }[network];
-  const msg = encodeURIComponent(
-    `Hi KEM! 🖐️\n\nI'd like to buy:\n📡 Network: ${networkName}\n📦 Data: ${data}\n💰 Price: GH₵ ${price}\n\nPlease send delivery instructions.`
-  );
-  window.open(`https://wa.me/233540363205?text=${msg}`, '_blank');
-  showToast(`Opening WhatsApp — ${networkName} ${data} = GH₵${price}`);
+  // Store pending payment info
+  pendingPayment = { network, dataPlan: data, amount: price, reference: null, accessCode: null };
+  
+  // Show the payment modal with details
+  document.getElementById('paymentNetwork').textContent = network.toUpperCase();
+  document.getElementById('paymentPlan').textContent = data;
+  document.getElementById('paymentAmount').textContent = `GH₵ ${price}`;
+  document.getElementById('paymentModal').classList.add('open');
+  document.body.classList.add('modal-open');
+}
+
+function closePaymentModal() {
+  document.getElementById('paymentModal').classList.remove('open');
+  document.body.classList.remove('modal-open');
+  // Reset form state
+  document.getElementById('paymentForm').style.display = 'block';
+  document.getElementById('paymentStatus').style.display = 'none';
+  document.getElementById('payBtn').disabled = false;
+  document.getElementById('payBtn').textContent = 'Proceed to Payment';
+}
+
+// Paystack integration - Config
+const API_BASE = 'http://localhost:8000';
+const PAYSTACK_PUBLIC_KEY = 'pk_test_xxxxxxxxxxxxx';  // ← Replace with your Paystack public key
+
+let pendingPayment = {
+  network: null,
+  dataPlan: null,
+  amount: 0,
+  reference: null,
+  accessCode: null,
+};
+
+async function proceedToPayment() {
+  const recipientPhone = document.getElementById('payRecipientPhone').value.trim();
+  const payerPhone = document.getElementById('payPayerPhone').value.trim() || recipientPhone;
+  const email = document.getElementById('payEmail').value.trim() || `${recipientPhone}@kemdataplug.com`;
+  
+  if (!recipientPhone || recipientPhone.length < 10) {
+    showToast('⚠️ Enter a valid recipient phone number');
+    return;
+  }
+  
+  // Show loading state
+  document.getElementById('payBtn').disabled = true;
+  document.getElementById('payBtn').textContent = 'Processing...';
+  
+  try {
+    const res = await fetch(`${API_BASE}/api/initiate-payment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        network: pendingPayment.network,
+        data_plan: pendingPayment.dataPlan,
+        recipient_phone: recipientPhone,
+        payer_phone: payerPhone,
+        email: email,
+      }),
+    });
+    
+    const data = await res.json();
+    
+    if (!data.success) {
+      showToast('⚠️ Payment initiation failed: ' + (data.message || 'Unknown error'));
+      document.getElementById('payBtn').disabled = false;
+      document.getElementById('payBtn').textContent = 'Proceed to Payment';
+      return;
+    }
+    
+    pendingPayment.reference = data.reference;
+    pendingPayment.accessCode = data.access_code;
+    
+    // Open Paystack inline
+    const handler = PaystackPop.setup({
+      key: PAYSTACK_PUBLIC_KEY,
+      access_code: data.access_code,
+      callback: function(response) {
+        // Payment successful in Paystack modal
+        verifyPayment(response.reference || pendingPayment.reference);
+      },
+      onClose: function() {
+        // User closed popup
+        document.getElementById('payBtn').disabled = false;
+        document.getElementById('payBtn').textContent = 'Proceed to Payment';
+      }
+    });
+    handler.openIframe();
+    
+  } catch (err) {
+    showToast('⚠️ Connection error. Check your internet and try again.');
+    document.getElementById('payBtn').disabled = false;
+    document.getElementById('payBtn').textContent = 'Proceed to Payment';
+  }
+}
+
+async function verifyPayment(reference) {
+  // Show processing state
+  document.getElementById('paymentForm').style.display = 'none';
+  document.getElementById('paymentStatus').style.display = 'block';
+  document.getElementById('paymentStatus').innerHTML = `
+    <div class="status-spinner"></div>
+    <h3 style="margin:12px 0;color:#F5A623;">Verifying Payment...</h3>
+    <p style="color:#A89A8C;font-size:0.85rem;">Ref: ${reference}</p>
+  `;
+  
+  // Poll for status
+  let attempts = 0;
+  const maxAttempts = 15;
+  
+  const check = async () => {
+    attempts++;
+    try {
+      const res = await fetch(`${API_BASE}/api/verify-payment?reference=${reference}`);
+      const data = await res.json();
+      
+      if (data.success && data.status === 'successful') {
+        document.getElementById('paymentStatus').innerHTML = `
+          <div style="font-size:3rem;margin-bottom:12px;">✅</div>
+          <h3 style="margin:8px 0;color:#34D399;">Payment Successful!</h3>
+          <p style="color:#A89A8C;font-size:0.85rem;margin-bottom:4px;">Ref: ${reference}</p>
+          <p style="color:#A89A8C;font-size:0.85rem;margin-bottom:12px;">
+            ${data.data_plan} · ${data.network?.toUpperCase()} · GH₵ ${data.amount}
+          </p>
+          <p style="color:#A89A8C;font-size:0.82rem;line-height:1.6;">
+            ${data.delivery_status === 'delivered' ? '✅ Data has been sent to your number.' : '⏳ Data delivery in progress...'}
+          </p>
+          <button onclick="closePaymentModal()" 
+                  style="margin-top:16px;padding:10px 24px;border-radius:30px;background:linear-gradient(135deg,#F5A623,#E8830A);color:#1A1410;font-weight:600;border:none;cursor:pointer;touch-action:manipulation;">
+            Back to Store
+          </button>
+        `;
+        showToast(`✅ Payment successful! ${data.data_plan} coming to ${data.recipient_phone}`);
+        return;
+      }
+    } catch(e) {}
+    
+    if (attempts < maxAttempts) {
+      setTimeout(check, 2000);
+    } else {
+      document.getElementById('paymentStatus').innerHTML = `
+        <div style="font-size:3rem;margin-bottom:12px;">⏳</div>
+        <h3 style="margin:8px 0;color:#F5A623;">Still processing...</h3>
+        <p style="color:#A89A8C;font-size:0.85rem;">Your payment is being confirmed. Check your transaction history.</p>
+        <p style="color:#A89A8C;font-size:0.85rem;margin-top:8px;">Ref: ${reference}</p>
+        <button onclick="closePaymentModal()" 
+                style="margin-top:16px;padding:10px 24px;border-radius:30px;background:linear-gradient(135deg,#F5A623,#E8830A);color:#1A1410;font-weight:600;border:none;cursor:pointer;touch-action:manipulation;">
+          Close
+        </button>
+      `;
+    }
+  };
+  
+  check();
 }
 
 function trackOrder() {
