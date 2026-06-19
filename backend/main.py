@@ -24,7 +24,7 @@ from backend.models import (
     PaymentChannel,
     DeliveryStatus,
     NETWORKS,
-    PRICING,
+    PRICING_BY_NETWORK,
     generate_ref,
 )
 from backend.paystack import initialize_transaction, verify_transaction, verify_webhook_signature
@@ -103,7 +103,8 @@ async def handle_initiate_payment(req: InitiatePaymentRequest, db: Session = Dep
         raise HTTPException(400, f"Invalid network. Choose: {', '.join(NETWORKS.keys())}")
 
     # Validate data plan and get price
-    plan = next((p for p in PRICING if p["data"].upper() == req.data_plan.upper()), None)
+    net_pricing = PRICING_BY_NETWORK.get(network, [])
+    plan = next((p for p in net_pricing if p["data"].upper() == req.data_plan.upper()), None)
     if not plan:
         raise HTTPException(400, f"Invalid data plan: {req.data_plan}")
 

@@ -29,25 +29,45 @@ NETWORKS = {
     "airteltigo": "AirtelTigo",
 }
 
-PRICING = [
-    {"data": "1GB", "price": 5},
-    {"data": "2GB", "price": 10},
-    {"data": "3GB", "price": 13},
-    {"data": "4GB", "price": 19},
-    {"data": "5GB", "price": 23},
-    {"data": "6GB", "price": 28},
-    {"data": "7GB", "price": 30},
-    {"data": "8GB", "price": 37},
-    {"data": "10GB", "price": 47},
-    {"data": "15GB", "price": 68},
-    {"data": "20GB", "price": 88},
-    {"data": "25GB", "price": 108},
-    {"data": "30GB", "price": 128},
-    {"data": "40GB", "price": 170},
-    {"data": "50GB", "price": 220},
-    {"data": "100GB", "price": 420},
-    {"data": "200GB", "price": 790},
-]
+PRICING_BY_NETWORK = {
+    "mtn": [
+        {"data": "1GB", "price": 5},
+        {"data": "2GB", "price": 10},
+        {"data": "3GB", "price": 13},
+        {"data": "4GB", "price": 19},
+        {"data": "5GB", "price": 23},
+        {"data": "6GB", "price": 28},
+        {"data": "7GB", "price": 30},
+        {"data": "8GB", "price": 37},
+        {"data": "10GB", "price": 47},
+        {"data": "15GB", "price": 68},
+        {"data": "20GB", "price": 88},
+        {"data": "25GB", "price": 108},
+        {"data": "30GB", "price": 128},
+        {"data": "40GB", "price": 170},
+        {"data": "50GB", "price": 220},
+        {"data": "100GB", "price": 420},
+        {"data": "200GB", "price": 790},
+    ],
+    "vodafone": [
+        {"data": "10GB", "price": 41},
+        {"data": "15GB", "price": 57},
+        {"data": "20GB", "price": 76},
+        {"data": "30GB", "price": 114},
+        {"data": "35GB", "price": 133},
+        {"data": "40GB", "price": 152},
+        {"data": "50GB", "price": 190},
+    ],
+    "airteltigo": [
+        {"data": "1GB", "price": 3.70},
+        {"data": "2GB", "price": 7.40},
+        {"data": "5GB", "price": 18.50},
+        {"data": "10GB", "price": 36.50},
+        {"data": "20GB", "price": 73},
+        {"data": "30GB", "price": 109.50},
+        {"data": "50GB", "price": 182.50},
+    ],
+}
 
 
 def generate_ref() -> str:

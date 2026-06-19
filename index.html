@@ -1085,25 +1085,46 @@
 </div>
 
 <script>
-const pricingData = [
-  { data: '1GB', price: 5, desc: 'Light browsing, WhatsApp', badge: 'Light', badgeClass: 'badge-light' },
-  { data: '2GB', price: 10, desc: 'Daily browsing & social', badge: 'Light', badgeClass: 'badge-light' },
-  { data: '3GB', price: 13, desc: 'Daily browsing & social', badge: 'Light', badgeClass: 'badge-light' },
-  { data: '4GB', price: 19, desc: 'Streaming & everyday use', badge: 'Stream', badgeClass: 'badge-stream' },
-  { data: '5GB', price: 23, desc: 'Streaming & everyday use', badge: 'Stream', badgeClass: 'badge-stream' },
-  { data: '6GB', price: 28, desc: 'Streaming & everyday use', badge: 'Stream', badgeClass: 'badge-stream' },
-  { data: '7GB', price: 30, desc: 'Heavy streaming & video', badge: 'Heavy', badgeClass: 'badge-heavy' },
-  { data: '8GB', price: 37, desc: 'Heavy streaming & video', badge: 'Heavy', badgeClass: 'badge-heavy' },
-  { data: '10GB', price: 47, desc: 'Heavy streaming & video', badge: 'Heavy', badgeClass: 'badge-heavy' },
-  { data: '15GB', price: 68, desc: 'Weekly heavy usage', badge: 'Pro', badgeClass: 'badge-pro' },
-  { data: '20GB', price: 88, desc: 'Weekly heavy usage', badge: 'Pro', badgeClass: 'badge-pro' },
-  { data: '25GB', price: 108, desc: 'Power user weekly', badge: 'Pro', badgeClass: 'badge-pro' },
-  { data: '30GB', price: 128, desc: 'Power user weekly', badge: 'Pro', badgeClass: 'badge-pro' },
-  { data: '40GB', price: 170, desc: 'Full month coverage', badge: 'Pro', badgeClass: 'badge-pro' },
-  { data: '50GB', price: 220, desc: 'Full month coverage', badge: 'Pro', badgeClass: 'badge-pro' },
-  { data: '100GB', price: 420, desc: 'Hotspot & heavy streaming', badge: 'Limitless', badgeClass: 'badge-pro' },
-  { data: '200GB', price: 790, desc: 'Hotspot & heavy streaming', badge: 'Limitless', badgeClass: 'badge-pro' },
-];
+// ─── Per‑network pricing from datasika.com ─────────────
+const pricingByNetwork = {
+  mtn: [
+    { data: '1GB', price: 5, desc: 'Light browsing, WhatsApp', badge: 'Light', badgeClass: 'badge-light' },
+    { data: '2GB', price: 10, desc: 'Daily browsing & social', badge: 'Light', badgeClass: 'badge-light' },
+    { data: '3GB', price: 13, desc: 'Daily browsing & social', badge: 'Light', badgeClass: 'badge-light' },
+    { data: '4GB', price: 19, desc: 'Streaming & everyday use', badge: 'Stream', badgeClass: 'badge-stream' },
+    { data: '5GB', price: 23, desc: 'Streaming & everyday use', badge: 'Stream', badgeClass: 'badge-stream' },
+    { data: '6GB', price: 28, desc: 'Streaming & everyday use', badge: 'Stream', badgeClass: 'badge-stream' },
+    { data: '7GB', price: 30, desc: 'Heavy streaming & video', badge: 'Heavy', badgeClass: 'badge-heavy' },
+    { data: '8GB', price: 37, desc: 'Heavy streaming & video', badge: 'Heavy', badgeClass: 'badge-heavy' },
+    { data: '10GB', price: 47, desc: 'Heavy streaming & video', badge: 'Heavy', badgeClass: 'badge-heavy' },
+    { data: '15GB', price: 68, desc: 'Weekly heavy usage', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '20GB', price: 88, desc: 'Weekly heavy usage', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '25GB', price: 108, desc: 'Power user weekly', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '30GB', price: 128, desc: 'Power user weekly', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '40GB', price: 170, desc: 'Full month coverage', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '50GB', price: 220, desc: 'Full month coverage', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '100GB', price: 420, desc: 'Hotspot & heavy streaming', badge: 'Limitless', badgeClass: 'badge-pro' },
+    { data: '200GB', price: 790, desc: 'Hotspot & heavy streaming', badge: 'Limitless', badgeClass: 'badge-pro' },
+  ],
+  vodafone: [
+    { data: '10GB', price: 41, desc: 'Heavy streaming & video', badge: 'Heavy', badgeClass: 'badge-heavy' },
+    { data: '15GB', price: 57, desc: 'Weekly heavy usage', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '20GB', price: 76, desc: 'Weekly heavy usage', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '30GB', price: 114, desc: 'Power user weekly', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '35GB', price: 133, desc: 'Power user weekly', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '40GB', price: 152, desc: 'Full month coverage', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '50GB', price: 190, desc: 'Full month coverage', badge: 'Pro', badgeClass: 'badge-pro' },
+  ],
+  airteltigo: [
+    { data: '1GB', price: 3.70, desc: 'Light browsing, WhatsApp', badge: 'Light', badgeClass: 'badge-light' },
+    { data: '2GB', price: 7.40, desc: 'Daily browsing & social', badge: 'Light', badgeClass: 'badge-light' },
+    { data: '5GB', price: 18.50, desc: 'Streaming & everyday use', badge: 'Stream', badgeClass: 'badge-stream' },
+    { data: '10GB', price: 36.50, desc: 'Heavy streaming & video', badge: 'Heavy', badgeClass: 'badge-heavy' },
+    { data: '20GB', price: 73, desc: 'Weekly heavy usage', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '30GB', price: 109.50, desc: 'Power user weekly', badge: 'Pro', badgeClass: 'badge-pro' },
+    { data: '50GB', price: 182.50, desc: 'Full month coverage', badge: 'Pro', badgeClass: 'badge-pro' },
+  ],
+};
 
 const networkColors = {
   mtn: { accent: '#C68400', bg: 'rgba(245,166,35,0.06)' },
@@ -1113,6 +1134,8 @@ const networkColors = {
 
 function renderPlans(network) {
   const section = document.getElementById(`${network}Pricing`);
+  const pricingData = pricingByNetwork[network];
+  if (!pricingData) return;
   const netColor = networkColors[network];
   const networkName = { mtn:'MTN Ghana', vodafone:'Vodafone Ghana', airteltigo:'AirtelTigo' }[network];
   section.innerHTML = `
