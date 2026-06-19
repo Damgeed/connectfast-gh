@@ -1232,6 +1232,38 @@ function closePaymentModal() {
   document.getElementById('paymentStatus').style.display = 'none';
   document.getElementById('payBtn').disabled = false;
   document.getElementById('payBtn').textContent = 'Proceed to Payment';
+const GHANA_PREFIXES = {
+  mtn: ['024','054','055','059'],
+  telecel: ['020','050'],
+  airteltigo: ['026','056','027','057'],
+};
+
+function validateGhanaPhone(phone) {
+  if (!phone || phone.trim().length < 5) return null;
+  let clean = phone.trim().replace(/[\s\-\(\)]/g, '');
+  if (clean.startsWith('+')) clean = clean.slice(1);
+  if (clean.startsWith('233') && (clean.length === 12 || clean.length === 13)) clean = '0' + clean.slice(3);
+  if (!/^0\d{9}$/.test(clean)) return { valid: false, msg: 'Enter a valid Ghana number (e.g. 054 036 3205)' };
+  const prefix = clean.slice(0,3);
+  for (const [net, prefs] of Object.entries(GHANA_PREFIXES)) {
+    if (prefs.includes(prefix)) return { valid: true, phone: clean, network: net, prefix };
+  }
+  return { valid: false, msg: 'Prefix ' + prefix + ' not recognized. Use MTN (024/054/055/059), Telecel (020/050) or AirtelTigo (026/056/027/057)' };
+}
+
+function onPhoneInput(input) {
+  const hint = input.parentElement.querySelector('.phone-hint');
+  if (!hint) return;
+  const result = validateGhanaPhone(input.value);
+  if (!result) { hint.textContent = ''; hint.className = 'phone-hint'; return; }
+  if (result.valid) {
+    hint.textContent = '✅ ' + result.network.charAt(0).toUpperCase() + result.network.slice(1) + ' (' + result.prefix + 'XXX XXXX)';
+    hint.className = 'phone-hint valid';
+  } else {
+    hint.textContent = '⚠️ ' + result.msg;
+    hint.className = 'phone-hint invalid';
+  }
+}
 }
 
 // Paystack integration - Config
@@ -1255,8 +1287,15 @@ async function proceedToPayment() {
   const payerPhone = document.getElementById('payPayerPhone').value.trim() || recipientPhone;
   const email = document.getElementById('payEmail').value.trim() || `${recipientPhone}@kemdataplug.com`;
   
-  if (!recipientPhone || recipientPhone.length < 10) {
-    showToast('⚠️ Enter a valid recipient phone number');
+  const rResult = validateGhanaPhone(recipientPhone);
+  if (!rResult || !rResult.valid) {
+    showToast('⚠️ ' + (rResult ? rResult.msg : 'Enter a valid Ghana number'));
+    return;
+  }
+  
+  const pResult = validateGhanaPhone(payerPhone);
+  if (!pResult || !pResult.valid) {
+    showToast('⚠️ ' + (pResult ? pResult.msg : 'Enter a valid payer number'));
     return;
   }
   
@@ -1283,6 +1322,38 @@ async function proceedToPayment() {
       showToast('⚠️ Payment initiation failed: ' + (data.message || 'Unknown error'));
       document.getElementById('payBtn').disabled = false;
       document.getElementById('payBtn').textContent = 'Proceed to Payment';
+const GHANA_PREFIXES = {
+  mtn: ['024','054','055','059'],
+  telecel: ['020','050'],
+  airteltigo: ['026','056','027','057'],
+};
+
+function validateGhanaPhone(phone) {
+  if (!phone || phone.trim().length < 5) return null;
+  let clean = phone.trim().replace(/[\s\-\(\)]/g, '');
+  if (clean.startsWith('+')) clean = clean.slice(1);
+  if (clean.startsWith('233') && (clean.length === 12 || clean.length === 13)) clean = '0' + clean.slice(3);
+  if (!/^0\d{9}$/.test(clean)) return { valid: false, msg: 'Enter a valid Ghana number (e.g. 054 036 3205)' };
+  const prefix = clean.slice(0,3);
+  for (const [net, prefs] of Object.entries(GHANA_PREFIXES)) {
+    if (prefs.includes(prefix)) return { valid: true, phone: clean, network: net, prefix };
+  }
+  return { valid: false, msg: 'Prefix ' + prefix + ' not recognized. Use MTN (024/054/055/059), Telecel (020/050) or AirtelTigo (026/056/027/057)' };
+}
+
+function onPhoneInput(input) {
+  const hint = input.parentElement.querySelector('.phone-hint');
+  if (!hint) return;
+  const result = validateGhanaPhone(input.value);
+  if (!result) { hint.textContent = ''; hint.className = 'phone-hint'; return; }
+  if (result.valid) {
+    hint.textContent = '✅ ' + result.network.charAt(0).toUpperCase() + result.network.slice(1) + ' (' + result.prefix + 'XXX XXXX)';
+    hint.className = 'phone-hint valid';
+  } else {
+    hint.textContent = '⚠️ ' + result.msg;
+    hint.className = 'phone-hint invalid';
+  }
+}
       return;
     }
     
@@ -1301,6 +1372,38 @@ async function proceedToPayment() {
         // User closed popup
         document.getElementById('payBtn').disabled = false;
         document.getElementById('payBtn').textContent = 'Proceed to Payment';
+const GHANA_PREFIXES = {
+  mtn: ['024','054','055','059'],
+  telecel: ['020','050'],
+  airteltigo: ['026','056','027','057'],
+};
+
+function validateGhanaPhone(phone) {
+  if (!phone || phone.trim().length < 5) return null;
+  let clean = phone.trim().replace(/[\s\-\(\)]/g, '');
+  if (clean.startsWith('+')) clean = clean.slice(1);
+  if (clean.startsWith('233') && (clean.length === 12 || clean.length === 13)) clean = '0' + clean.slice(3);
+  if (!/^0\d{9}$/.test(clean)) return { valid: false, msg: 'Enter a valid Ghana number (e.g. 054 036 3205)' };
+  const prefix = clean.slice(0,3);
+  for (const [net, prefs] of Object.entries(GHANA_PREFIXES)) {
+    if (prefs.includes(prefix)) return { valid: true, phone: clean, network: net, prefix };
+  }
+  return { valid: false, msg: 'Prefix ' + prefix + ' not recognized. Use MTN (024/054/055/059), Telecel (020/050) or AirtelTigo (026/056/027/057)' };
+}
+
+function onPhoneInput(input) {
+  const hint = input.parentElement.querySelector('.phone-hint');
+  if (!hint) return;
+  const result = validateGhanaPhone(input.value);
+  if (!result) { hint.textContent = ''; hint.className = 'phone-hint'; return; }
+  if (result.valid) {
+    hint.textContent = '✅ ' + result.network.charAt(0).toUpperCase() + result.network.slice(1) + ' (' + result.prefix + 'XXX XXXX)';
+    hint.className = 'phone-hint valid';
+  } else {
+    hint.textContent = '⚠️ ' + result.msg;
+    hint.className = 'phone-hint invalid';
+  }
+}
       }
     });
     handler.openIframe();
@@ -1309,6 +1412,38 @@ async function proceedToPayment() {
     showToast('⚠️ Connection error. Check your internet and try again.');
     document.getElementById('payBtn').disabled = false;
     document.getElementById('payBtn').textContent = 'Proceed to Payment';
+const GHANA_PREFIXES = {
+  mtn: ['024','054','055','059'],
+  telecel: ['020','050'],
+  airteltigo: ['026','056','027','057'],
+};
+
+function validateGhanaPhone(phone) {
+  if (!phone || phone.trim().length < 5) return null;
+  let clean = phone.trim().replace(/[\s\-\(\)]/g, '');
+  if (clean.startsWith('+')) clean = clean.slice(1);
+  if (clean.startsWith('233') && (clean.length === 12 || clean.length === 13)) clean = '0' + clean.slice(3);
+  if (!/^0\d{9}$/.test(clean)) return { valid: false, msg: 'Enter a valid Ghana number (e.g. 054 036 3205)' };
+  const prefix = clean.slice(0,3);
+  for (const [net, prefs] of Object.entries(GHANA_PREFIXES)) {
+    if (prefs.includes(prefix)) return { valid: true, phone: clean, network: net, prefix };
+  }
+  return { valid: false, msg: 'Prefix ' + prefix + ' not recognized. Use MTN (024/054/055/059), Telecel (020/050) or AirtelTigo (026/056/027/057)' };
+}
+
+function onPhoneInput(input) {
+  const hint = input.parentElement.querySelector('.phone-hint');
+  if (!hint) return;
+  const result = validateGhanaPhone(input.value);
+  if (!result) { hint.textContent = ''; hint.className = 'phone-hint'; return; }
+  if (result.valid) {
+    hint.textContent = '✅ ' + result.network.charAt(0).toUpperCase() + result.network.slice(1) + ' (' + result.prefix + 'XXX XXXX)';
+    hint.className = 'phone-hint valid';
+  } else {
+    hint.textContent = '⚠️ ' + result.msg;
+    hint.className = 'phone-hint invalid';
+  }
+}
   }
 }
 

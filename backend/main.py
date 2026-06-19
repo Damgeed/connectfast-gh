@@ -6,6 +6,7 @@ Paystack-powered data bundle sales for MTN, Telecel, AirtelTigo.
 
 import json
 import logging
+import re
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -86,11 +87,98 @@ class PaymentStatusResponse(BaseModel):
     recipient_phone: Optional[str] = None
 
 
+class TrackOrderResponse(BaseModel):
+    success: bool
+    found: bool = False
+    transactions: list = []
+    message: str = ""
+
+
+class TrackOrderItem(BaseModel):
+    reference: str
+    network: str
+    data_plan: str
+    amount: float
+    recipient_phone: str
+    status: str
+    delivery_status: str
+    paid_at: Optional[str] = None
+    delivered_at: Optional[str] = None
+    created_at: str
+
+
+# ─── Helpers ──────────────────────────────────────────────────
+
+GHANA_PREFIXES = {
+    '024': 'mtn', '054': 'mtn', '055': 'mtn', '059': 'mtn',
+    '020': 'telecel', '050': 'telecel',
+    '026': 'airteltigo', '056': 'airteltigo',
+    '027': 'airteltigo', '057': 'airteltigo',
+}
+
+def validate_ghana_phone(phone: str) -> tuple:
+    """Validate & normalize a Ghana phone. Returns (normalized_phone, detected_network)."""
+    clean = re.sub(r'[\s\-\(\)]', '', phone.strip())
+    if clean.startswith('+'):
+        clean = clean[1:]
+    if clean.startswith('233') and len(clean) in (12, 13):
+        clean = '0' + clean[3:]
+    if not re.match(r'^0\d{9}$', clean):
+        raise ValueError("Enter a valid Ghana number (e.g. 054 036 3205)")
+    prefix = clean[:3]
+    net = GHANA_PREFIXES.get(prefix)
+    if not net:
+        raise ValueError(f"Prefix {prefix} not recognized. Use MTN (024/054/055/059), Telecel (020/050) or AirtelTigo (026/056/027/057)")
+    return clean, net
+
+
 # ─── Endpoints ────────────────────────────────────────────────
 
 @app.get("/api/health")
 async def health():
     return {"status": "ok", "service": "KEM Data Plug API"}
+
+
+@app.get("/api/track-order", response_model=TrackOrderResponse)
+async def handle_track_order(phone: str, db: Session = Depends(get_db)):
+    """Real-time order tracking by phone number."""
+    try:
+        norm_phone, _ = validate_ghana_phone(phone)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+
+    txs = db.query(Transaction).filter(
+        Transaction.recipient_phone == norm_phone
+    ).order_by(Transaction.created_at.desc()).limit(10).all()
+
+    if not txs:
+        return TrackOrderResponse(
+            success=True,
+            found=False,
+            message="No orders found for this number - you haven't bought data yet",
+        )
+
+    items = []
+    for tx in txs:
+        items.append(TrackOrderItem(
+            reference=tx.reference,
+            network=tx.network,
+            data_plan=tx.data_plan,
+            amount=tx.amount,
+            recipient_phone=tx.recipient_phone,
+            status=tx.status.value if tx.status else "unknown",
+            delivery_status=tx.delivery_status.value if tx.delivery_status else "pending",
+            paid_at=tx.paid_at.isoformat() if tx.paid_at else None,
+            delivered_at=tx.delivered_at.isoformat() if tx.delivered_at else None,
+            created_at=tx.created_at.isoformat() if tx.created_at else "",
+        ))
+
+    return TrackOrderResponse(
+        success=True,
+        found=True,
+        transactions=items,
+        message=f"Found {len(items)} order(s) for {norm_phone}",
+    )
 
 
 @app.post("/api/initiate-payment", response_model=InitiatePaymentResponse)
@@ -111,9 +199,14 @@ async def handle_initiate_payment(req: InitiatePaymentRequest, db: Session = Dep
     amount = plan["price"]
 
     # Validate phone
-    phone = req.recipient_phone.strip()
-    if not phone.startswith("0") or len(phone) < 10:
-        raise HTTPException(400, "Recipient phone must be a valid Ghana number (e.g. 0540363205)")
+    try:
+        phone, detected_net = validate_ghana_phone(req.recipient_phone)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+
+    # Optional: warn if network doesn't match prefix
+    if detected_net != network:
+        logger.warning(f"Phone prefix suggests {detected_net}, but network {network} was selected")
 
     # Generate reference
     reference = generate_ref()
