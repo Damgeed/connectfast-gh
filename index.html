@@ -707,6 +707,14 @@
     }
 
     .modal-form { display: flex; flex-direction: column; gap: 12px; }
+    .field-error-placeholder { font-size: 0.72rem; min-height: 18px; margin: -6px 0 10px; padding-left: 2px; color: var(--text-secondary); }
+    .field-error-placeholder.valid,
+    .phone-hint.valid { color: #34D399; }
+    .field-error-placeholder.invalid,
+    .phone-hint.invalid { color: #EF4444; }
+    .phone-hint { font-size: 0.72rem; min-height: 18px; margin: -6px 0 10px; padding-left: 2px; color: var(--text-secondary); }
+    .field-error { font-size: 0.72rem; color: #EF4444; margin: -6px 0 12px; padding-left: 2px; }
+    .field-invalid { border-color: #EF4444 !important; box-shadow: 0 0 0 1px #EF4444 !important; }
     .modal-form label {
       font-size: 0.78rem; font-weight: 500;
       color: var(--text-secondary); margin-bottom: -4px;
@@ -1066,11 +1074,12 @@
     </div>
     <div class="modal-form" id="paymentForm">
       <label for="payRecipientPhone">Recipient phone number *</label>
-      <input type="tel" id="payRecipientPhone" placeholder="054 036 3205" maxlength="15" inputmode="numeric" autocomplete="tel">
-      <label for="payPayerPhone">Your phone number (optional)</label>
-      <input type="tel" id="payPayerPhone" placeholder="Same as above if blank" maxlength="15" inputmode="numeric" autocomplete="tel">
-      <label for="payEmail">Email address (receipt)</label>
-      <input type="email" id="payEmail" placeholder="for payment receipt" autocomplete="email">
+      <input type="tel" id="payRecipientPhone" placeholder="054 036 3205" maxlength="15" inputmode="numeric" autocomplete="tel" oninput="onPhoneInput(this)">
+      <label for="payPayerPhone">Your phone number (for MoMo payment)</label>
+      <input type="tel" id="payPayerPhone" placeholder="054 036 3205" maxlength="15" inputmode="numeric" autocomplete="tel" oninput="onPhoneInput(this)">
+      <label for="payEmail">Email address (receipt) *</label>
+      <input type="email" id="payEmail" placeholder="for payment receipt" autocomplete="email" oninput="onEmailInput(this)">
+      <div class="field-error-placeholder" id="payEmailHint"></div>
       <button class="btn-primary" id="payBtn" onclick="proceedToPayment()">
         Proceed to Payment
       </button>
@@ -1237,6 +1246,8 @@ function closePaymentModal() {
   document.getElementById('paymentStatus').style.display = 'none';
   document.getElementById('payBtn').disabled = false;
   document.getElementById('payBtn').textContent = 'Proceed to Payment';
+}
+
 const GHANA_PREFIXES = {
   mtn: ['024','054','055','059'],
   telecel: ['020','050'],
@@ -1259,6 +1270,9 @@ function validateGhanaPhone(phone) {
 function onPhoneInput(input) {
   const hint = input.parentElement.querySelector('.phone-hint');
   if (!hint) return;
+  input.classList.remove('field-invalid');
+  const err = input.parentElement.querySelector('.field-error');
+  if (err) err.remove();
   const result = validateGhanaPhone(input.value);
   if (!result) { hint.textContent = ''; hint.className = 'phone-hint'; return; }
   if (result.valid) {
@@ -1269,6 +1283,34 @@ function onPhoneInput(input) {
     hint.className = 'phone-hint invalid';
   }
 }
+
+function onEmailInput(input) {
+  input.classList.remove('field-invalid');
+  const err = input.parentElement.querySelector('.field-error');
+  if (err) err.remove();
+  const hint = document.getElementById('payEmailHint');
+  if (!hint) return;
+  const val = input.value.trim();
+  if (!val) { hint.textContent = ''; hint.className = 'field-error-placeholder'; return; }
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+    hint.textContent = '✅ Valid email';
+    hint.className = 'phone-hint valid';
+  } else {
+    hint.textContent = '⚠️ Enter a valid email address';
+    hint.className = 'phone-hint invalid';
+  }
+}
+
+function showFieldError(inputId, msg) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  input.classList.add('field-invalid');
+  const old = input.parentElement.querySelector('.field-error');
+  if (old) old.remove();
+  const err = document.createElement('div');
+  err.className = 'field-error';
+  err.textContent = '⚠️ ' + msg;
+  input.parentElement.insertBefore(err, input.nextSibling);
 }
 
 // Paystack integration - Config
@@ -1288,19 +1330,43 @@ let pendingPayment = {
 };
 
 async function proceedToPayment() {
-  const recipientPhone = document.getElementById('payRecipientPhone').value.trim();
-  const payerPhone = document.getElementById('payPayerPhone').value.trim() || recipientPhone;
-  const email = document.getElementById('payEmail').value.trim() || `${recipientPhone}@kemdataplug.com`;
+  // Clear previous inline errors
+  document.querySelectorAll('.field-error').forEach(e => e.remove());
+  document.querySelectorAll('.field-invalid').forEach(e => e.classList.remove('field-invalid'));
   
+  const recipientPhone = document.getElementById('payRecipientPhone').value.trim();
+  const payerPhone = document.getElementById('payPayerPhone').value.trim();
+  const email = document.getElementById('payEmail').value.trim();
+  
+  let hasError = false;
+  
+  // Validate recipient phone (required)
   const rResult = validateGhanaPhone(recipientPhone);
-  if (!rResult || !rResult.valid) {
-    showToast('⚠️ ' + (rResult ? rResult.msg : 'Enter a valid Ghana number'));
-    return;
+  if (!recipientPhone || !rResult || !rResult.valid) {
+    showFieldError('payRecipientPhone', rResult ? rResult.msg : 'Enter a Ghana number like 054 036 3205');
+    hasError = true;
   }
   
-  const pResult = validateGhanaPhone(payerPhone);
-  if (!pResult || !pResult.valid) {
-    showToast('⚠️ ' + (pResult ? pResult.msg : 'Enter a valid payer number'));
+  // Validate payer phone (required for MoMo)
+  if (!payerPhone) {
+    showFieldError('payPayerPhone', 'Enter your phone number for MoMo payment');
+    hasError = true;
+  } else {
+    const pResult = validateGhanaPhone(payerPhone);
+    if (!pResult || !pResult.valid) {
+      showFieldError('payPayerPhone', pResult ? pResult.msg : 'Enter a valid Ghana number');
+      hasError = true;
+    }
+  }
+  
+  // Validate email (required)
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showFieldError('payEmail', !email ? 'Email is required for payment receipt' : 'Enter a valid email address (e.g. name@domain.com)');
+    hasError = true;
+  }
+  
+  if (hasError) {
+    showToast('⚠️ Fix the highlighted fields and try again');
     return;
   }
   
@@ -1327,38 +1393,6 @@ async function proceedToPayment() {
       showToast('⚠️ Payment initiation failed: ' + (data.message || 'Unknown error'));
       document.getElementById('payBtn').disabled = false;
       document.getElementById('payBtn').textContent = 'Proceed to Payment';
-const GHANA_PREFIXES = {
-  mtn: ['024','054','055','059'],
-  telecel: ['020','050'],
-  airteltigo: ['026','056','027','057'],
-};
-
-function validateGhanaPhone(phone) {
-  if (!phone || phone.trim().length < 5) return null;
-  let clean = phone.trim().replace(/[\s\-\(\)]/g, '');
-  if (clean.startsWith('+')) clean = clean.slice(1);
-  if (clean.startsWith('233') && (clean.length === 12 || clean.length === 13)) clean = '0' + clean.slice(3);
-  if (!/^0\d{9}$/.test(clean)) return { valid: false, msg: 'Enter a valid Ghana number (e.g. 054 036 3205)' };
-  const prefix = clean.slice(0,3);
-  for (const [net, prefs] of Object.entries(GHANA_PREFIXES)) {
-    if (prefs.includes(prefix)) return { valid: true, phone: clean, network: net, prefix };
-  }
-  return { valid: false, msg: 'Prefix ' + prefix + ' not recognized. Use MTN (024/054/055/059), Telecel (020/050) or AirtelTigo (026/056/027/057)' };
-}
-
-function onPhoneInput(input) {
-  const hint = input.parentElement.querySelector('.phone-hint');
-  if (!hint) return;
-  const result = validateGhanaPhone(input.value);
-  if (!result) { hint.textContent = ''; hint.className = 'phone-hint'; return; }
-  if (result.valid) {
-    hint.textContent = '✅ ' + result.network.charAt(0).toUpperCase() + result.network.slice(1) + ' (' + result.prefix + 'XXX XXXX)';
-    hint.className = 'phone-hint valid';
-  } else {
-    hint.textContent = '⚠️ ' + result.msg;
-    hint.className = 'phone-hint invalid';
-  }
-}
       return;
     }
     
@@ -1377,38 +1411,6 @@ function onPhoneInput(input) {
         // User closed popup
         document.getElementById('payBtn').disabled = false;
         document.getElementById('payBtn').textContent = 'Proceed to Payment';
-const GHANA_PREFIXES = {
-  mtn: ['024','054','055','059'],
-  telecel: ['020','050'],
-  airteltigo: ['026','056','027','057'],
-};
-
-function validateGhanaPhone(phone) {
-  if (!phone || phone.trim().length < 5) return null;
-  let clean = phone.trim().replace(/[\s\-\(\)]/g, '');
-  if (clean.startsWith('+')) clean = clean.slice(1);
-  if (clean.startsWith('233') && (clean.length === 12 || clean.length === 13)) clean = '0' + clean.slice(3);
-  if (!/^0\d{9}$/.test(clean)) return { valid: false, msg: 'Enter a valid Ghana number (e.g. 054 036 3205)' };
-  const prefix = clean.slice(0,3);
-  for (const [net, prefs] of Object.entries(GHANA_PREFIXES)) {
-    if (prefs.includes(prefix)) return { valid: true, phone: clean, network: net, prefix };
-  }
-  return { valid: false, msg: 'Prefix ' + prefix + ' not recognized. Use MTN (024/054/055/059), Telecel (020/050) or AirtelTigo (026/056/027/057)' };
-}
-
-function onPhoneInput(input) {
-  const hint = input.parentElement.querySelector('.phone-hint');
-  if (!hint) return;
-  const result = validateGhanaPhone(input.value);
-  if (!result) { hint.textContent = ''; hint.className = 'phone-hint'; return; }
-  if (result.valid) {
-    hint.textContent = '✅ ' + result.network.charAt(0).toUpperCase() + result.network.slice(1) + ' (' + result.prefix + 'XXX XXXX)';
-    hint.className = 'phone-hint valid';
-  } else {
-    hint.textContent = '⚠️ ' + result.msg;
-    hint.className = 'phone-hint invalid';
-  }
-}
       }
     });
     handler.openIframe();
@@ -1417,38 +1419,6 @@ function onPhoneInput(input) {
     showToast('⚠️ Connection error. Check your internet and try again.');
     document.getElementById('payBtn').disabled = false;
     document.getElementById('payBtn').textContent = 'Proceed to Payment';
-const GHANA_PREFIXES = {
-  mtn: ['024','054','055','059'],
-  telecel: ['020','050'],
-  airteltigo: ['026','056','027','057'],
-};
-
-function validateGhanaPhone(phone) {
-  if (!phone || phone.trim().length < 5) return null;
-  let clean = phone.trim().replace(/[\s\-\(\)]/g, '');
-  if (clean.startsWith('+')) clean = clean.slice(1);
-  if (clean.startsWith('233') && (clean.length === 12 || clean.length === 13)) clean = '0' + clean.slice(3);
-  if (!/^0\d{9}$/.test(clean)) return { valid: false, msg: 'Enter a valid Ghana number (e.g. 054 036 3205)' };
-  const prefix = clean.slice(0,3);
-  for (const [net, prefs] of Object.entries(GHANA_PREFIXES)) {
-    if (prefs.includes(prefix)) return { valid: true, phone: clean, network: net, prefix };
-  }
-  return { valid: false, msg: 'Prefix ' + prefix + ' not recognized. Use MTN (024/054/055/059), Telecel (020/050) or AirtelTigo (026/056/027/057)' };
-}
-
-function onPhoneInput(input) {
-  const hint = input.parentElement.querySelector('.phone-hint');
-  if (!hint) return;
-  const result = validateGhanaPhone(input.value);
-  if (!result) { hint.textContent = ''; hint.className = 'phone-hint'; return; }
-  if (result.valid) {
-    hint.textContent = '✅ ' + result.network.charAt(0).toUpperCase() + result.network.slice(1) + ' (' + result.prefix + 'XXX XXXX)';
-    hint.className = 'phone-hint valid';
-  } else {
-    hint.textContent = '⚠️ ' + result.msg;
-    hint.className = 'phone-hint invalid';
-  }
-}
   }
 }
 
