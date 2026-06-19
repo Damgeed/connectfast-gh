@@ -25,7 +25,7 @@ class DeliveryStatus(str, enum.Enum):
 
 NETWORKS = {
     "mtn": "MTN Ghana",
-    "vodafone": "Vodafone Ghana",
+    "telecel": "Telecel Ghana",
     "airteltigo": "AirtelTigo",
 }
 
@@ -49,7 +49,7 @@ PRICING_BY_NETWORK = {
         {"data": "100GB", "price": 420},
         {"data": "200GB", "price": 790},
     ],
-    "vodafone": [
+    "telecel": [
         {"data": "10GB", "price": 41},
         {"data": "15GB", "price": 57},
         {"data": "20GB", "price": 76},

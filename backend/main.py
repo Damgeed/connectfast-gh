@@ -1,7 +1,7 @@
 """
 KEM Data Plug — FastAPI Backend
 
-Paystack-powered data bundle sales for MTN, Vodafone, AirtelTigo.
+Paystack-powered data bundle sales for MTN, Telecel, AirtelTigo.
 """
 
 import json
@@ -59,7 +59,7 @@ Base.metadata.create_all(bind=engine)
 # ─── Schemas ──────────────────────────────────────────────────
 
 class InitiatePaymentRequest(BaseModel):
-    network: str = Field(..., description="mtn, vodafone, or airteltigo")
+    network: str = Field(..., description="mtn, telecel, or airteltigo")
     data_plan: str = Field(..., description="e.g. 5GB, 10GB, 50GB")
     recipient_phone: str = Field(..., min_length=10, max_length=15)
     payer_phone: Optional[str] = Field(None, min_length=10, max_length=15)

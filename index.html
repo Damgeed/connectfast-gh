@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KEM Data Plug — Buy Data Online</title>
   <meta property="og:title" content="KEM Data Plug — Buy Data Online">
-  <meta property="og:description" content="Instant data bundles for MTN, Vodafone &amp; AirtelTigo. Order on WhatsApp and get connected in seconds.">
+  <meta property="og:description" content="Instant data bundles for MTN, Telecel &amp; AirtelTigo. Order on WhatsApp and get connected in seconds.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://damgeed.github.io/connectfast-gh/">
   <meta property="og:site_name" content="KEM Data Plug">
@@ -331,8 +331,8 @@
 
     .network-mtn .network-icon { background: var(--accent-gradient); }
     .network-mtn h3 { color: var(--badge-text); }
-    .network-vodafone .network-icon { background: linear-gradient(135deg, #E60000, #CC0000); }
-    .network-vodafone h3 { color: #E60000; }
+    .network-telecel .network-icon { background: linear-gradient(135deg, #E60000, #CC0000); }
+    .network-telecel h3 { color: #E60000; }
     .network-airteltigo .network-icon { background: linear-gradient(135deg, #ED1C24, #C4121A); }
     .network-airteltigo h3 { color: #ED1C24; }
 
@@ -636,8 +636,6 @@
       z-index: 500;
       background: var(--overlay);
       backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-      display: flex; align-items: center; justify-content: center;
-      padding: 20px;
       opacity: 0; pointer-events: none;
       transition: opacity 0.3s ease;
     }
@@ -647,18 +645,18 @@
     body.modal-open { overflow: hidden; }
 
     .modal-card {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-xl);
-      max-width: 400px; width: 100%;
+      max-width: 400px; width: calc(100% - 40px);
       padding: 28px;
       box-shadow: var(--shadow-xl);
-      position: relative;
-      transform: translateY(20px);
       transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
     }
     .modal-backdrop.open .modal-card {
-      transform: translateY(0);
+      transform: translate(-50%, -50%) scale(1);
     }
     .modal-close {
       position: absolute; top: 14px; right: 14px;
@@ -724,7 +722,7 @@
 
     /* Payment status */
     .payment-status {
-      display: none; text-align: center; padding: 8px 0;
+      display: none; text-align: center; padding: 20px 0 12px;
     }
     @keyframes spin {
       to { transform: rotate(360deg); }
@@ -834,7 +832,7 @@
       <span>Hi 👋, KEM here</span>
     </div>
     <h1>Data plans that<br><span class="hl">won't burn your pockets</span></h1>
-    <p>Instant data bundles for MTN, Vodafone &amp; AirtelTigo. Order on WhatsApp and get connected in seconds.</p>
+    <p>Instant data bundles for MTN, Telecel &amp; AirtelTigo. Order on WhatsApp and get connected in seconds.</p>
     <div class="hero-actions">
       <a class="btn-primary" onclick="document.getElementById('networks').scrollIntoView({behavior:'smooth'})">
         See Plans ↓
@@ -875,9 +873,9 @@
         </div>
       </div>
     </div>
-    <div class="network-card network-vodafone" data-network="vodafone" onclick="selectNetwork('vodafone')">
+    <div class="network-card network-telecel" data-network="telecel" onclick="selectNetwork('telecel')">
       <div class="network-icon">VDF</div>
-      <h3>Vodafone Ghana</h3>
+      <h3>Telecel Ghana</h3>
       <p>Fast 4G LTE data bundles</p>
       <span class="plan-count">18 plans</span>
     </div>
@@ -893,7 +891,7 @@
 <!-- ─── PRICING ────────────────────────────────────── -->
 <div class="container" id="pricingSection">
   <div class="pricing-section visible" id="mtnPricing"></div>
-  <div class="pricing-section" id="vodafonePricing"></div>
+  <div class="pricing-section" id="telecelPricing"></div>
   <div class="pricing-section" id="airteltigoPricing"></div>
 </div>
 
@@ -1004,7 +1002,7 @@
         <span>What payment methods do you accept?</span>
         <span class="faq-arrow">▾</span>
       </div>
-      <div class="faq-answer">We accept Mobile Money (MTN MoMo, Vodafone Cash, AirtelTigo Money). Just place your order and we'll send payment details on WhatsApp.</div>
+      <div class="faq-answer">We accept Mobile Money (MTN MoMo, Telecel Cash, AirtelTigo Money). Just place your order and we'll send payment details on WhatsApp.</div>
     </div>
     <div class="faq-item">
       <div class="faq-question" onclick="toggleFaq(this)">
@@ -1018,7 +1016,7 @@
         <span>Can I buy for someone else's number?</span>
         <span class="faq-arrow">▾</span>
       </div>
-      <div class="faq-answer">Yes! Just let us know the number you want the data sent to when you message us on WhatsApp. We'll load it on any MTN, Vodafone, or AirtelTigo line.</div>
+      <div class="faq-answer">Yes! Just let us know the number you want the data sent to when you message us on WhatsApp. We'll load it on any MTN, Telecel, or AirtelTigo line.</div>
     </div>
   </div>
 </div>
@@ -1027,7 +1025,7 @@
 <footer class="footer">
   <div class="container">
     <div class="footer-brand">KEM Data Plug ⚡</div>
-    <p>Data bundles for MTN, Vodafone &amp; AirtelTigo.</p>
+    <p>Data bundles for MTN, Telecel &amp; AirtelTigo.</p>
     <div class="footer-links">
       <a onclick="showHome(); scrollToSection('networks')">Plans</a>
       <a onclick="scrollToSection('about')">About</a>
@@ -1106,7 +1104,7 @@ const pricingByNetwork = {
     { data: '100GB', price: 420, desc: 'Hotspot & heavy streaming', badge: 'Limitless', badgeClass: 'badge-pro' },
     { data: '200GB', price: 790, desc: 'Hotspot & heavy streaming', badge: 'Limitless', badgeClass: 'badge-pro' },
   ],
-  vodafone: [
+  telecel: [
     { data: '10GB', price: 41, desc: 'Heavy streaming & video', badge: 'Heavy', badgeClass: 'badge-heavy' },
     { data: '15GB', price: 57, desc: 'Weekly heavy usage', badge: 'Pro', badgeClass: 'badge-pro' },
     { data: '20GB', price: 76, desc: 'Weekly heavy usage', badge: 'Pro', badgeClass: 'badge-pro' },
@@ -1128,7 +1126,7 @@ const pricingByNetwork = {
 
 const networkColors = {
   mtn: { accent: '#C68400', bg: 'rgba(245,166,35,0.06)' },
-  vodafone: { accent: '#E60000', bg: 'rgba(230,0,0,0.06)' },
+  telecel: { accent: '#E60000', bg: 'rgba(230,0,0,0.06)' },
   airteltigo: { accent: '#ED1C24', bg: 'rgba(237,28,36,0.06)' },
 };
 
@@ -1137,7 +1135,7 @@ function renderPlans(network) {
   const pricingData = pricingByNetwork[network];
   if (!pricingData) return;
   const netColor = networkColors[network];
-  const networkName = { mtn:'MTN Ghana', vodafone:'Vodafone Ghana', airteltigo:'AirtelTigo' }[network];
+  const networkName = { mtn:'MTN Ghana', telecel:'Telecel Ghana', airteltigo:'AirtelTigo' }[network];
   section.innerHTML = `
     <div class="pricing-header">
       <div class="pricing-header-left">
@@ -1462,7 +1460,7 @@ function installPWA() {
   });
 }
 
-['mtn','vodafone','airteltigo'].forEach(renderPlans);
+['mtn','telecel','airteltigo'].forEach(renderPlans);
 </script>
 </body>
 </html>

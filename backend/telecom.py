@@ -59,7 +59,7 @@ async def deliver_data_vendor(
       POST {vendor_url}/api/topup
       {
         "api_key": "...",
-        "network": "mtn|vodafone|airteltigo",
+        "network": "mtn|telecel|airteltigo",
         "data_plan": "1GB|2GB|...",
         "phone": "0540363205",
         "reference": "KDP-..."
@@ -71,7 +71,7 @@ async def deliver_data_vendor(
 
     network_map = {
         "mtn": 1,
-        "vodafone": 2,
+        "telecel": 2,
         "airteltigo": 4,
     }
 
