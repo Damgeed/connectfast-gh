@@ -867,23 +867,23 @@
       <div class="network-card-inner">
         <div class="network-icon">MTN</div>
         <div class="network-text">
-          <h3>MTN Ghana</h3>
+          <h3>MTN</h3>
           <p>Data bundles for browsing, streaming &amp; more</p>
-          <span class="plan-count">18 plans</span>
+          <span class="plan-count">17 plans</span>
         </div>
       </div>
     </div>
     <div class="network-card network-telecel" data-network="telecel" onclick="selectNetwork('telecel')">
-      <div class="network-icon">VDF</div>
-      <h3>Telecel Ghana</h3>
+      <div class="network-icon">t</div>
+      <h3>Telecel</h3>
       <p>Fast 4G LTE data bundles</p>
-      <span class="plan-count">18 plans</span>
+      <span class="plan-count">7 plans</span>
     </div>
     <div class="network-card network-airteltigo" data-network="airteltigo" onclick="selectNetwork('airteltigo')">
-      <div class="network-icon">A·T</div>
+      <div class="network-icon">at</div>
       <h3>AirtelTigo</h3>
       <p>Affordable data bundles for everyone</p>
-      <span class="plan-count">18 plans</span>
+      <span class="plan-count">7 plans</span>
     </div>
   </div>
 </div>
@@ -1135,7 +1135,7 @@ function renderPlans(network) {
   const pricingData = pricingByNetwork[network];
   if (!pricingData) return;
   const netColor = networkColors[network];
-  const networkName = { mtn:'MTN Ghana', telecel:'Telecel Ghana', airteltigo:'AirtelTigo' }[network];
+  const networkName = { mtn:'MTN', telecel:'Telecel', airteltigo:'AirtelTigo' }[network];
   section.innerHTML = `
     <div class="pricing-header">
       <div class="pricing-header-left">
@@ -1150,12 +1150,16 @@ function renderPlans(network) {
     <div class="pricing-table" id="${network}Table">
       ${pricingData.map(p => {
         const gbVal = parseInt(p.data.replace('GB',''));
-        const isBest = gbVal === bestValueGb;
+        const bestGb = pricingData.reduce((best, x) => {
+          const g = parseInt(x.data.replace('GB',''));
+          const r = g / x.price;
+          return r > best.ratio ? { gb: g, ratio: r } : best;
+        }, { gb: pricingData[0] ? parseInt(pricingData[0].data.replace('GB','')) : 1, ratio: 0 }).gb;
+        const isBest = gbVal === bestGb;
         return `
         <div class="pricing-card${isBest?' best-value':''}" onclick="buyPlan('${network}', '${p.data}', ${p.price})">
           <span class="plan-badge ${p.badgeClass}">${isBest ? '🏆 '+p.badge : p.badge}</span>
           <div class="plan-gb">${p.data.replace('GB','')}<span class="gb-label">GB</span></div>
-          <div class="plan-desc">${p.desc}</div>
           <div class="plan-bottom">
             <div class="plan-price"><span class="currency">GH₵</span> ${p.price}</div>
             <button class="buy-btn">Buy</button>
@@ -1164,13 +1168,6 @@ function renderPlans(network) {
       `}).join('')}
     </div>`;
 }
-
-// Best value = highest GB per GH₵ (largest plan / its price ratio)
-const bestValueGb = pricingData.reduce((best, p) => {
-  const gb = parseInt(p.data.replace('GB',''));
-  const ratio = gb / p.price;
-  return ratio > best.ratio ? { gb, ratio } : best;
-}, { gb: pricingData[0] ? parseInt(pricingData[0].data.replace('GB','')) : 1, ratio: 0 }).gb;
 
 function filterPlans(network) {
   const input = document.getElementById(`${network}Filter`);
