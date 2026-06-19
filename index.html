@@ -1214,8 +1214,12 @@ function closePaymentModal() {
 }
 
 // Paystack integration - Config
-const API_BASE = 'http://localhost:8000';
 const PAYSTACK_PUBLIC_KEY = 'pk_test_xxxxxxxxxxxxx';  // ← Replace with your Paystack public key
+
+// API base — auto-detect: localhost → dev, otherwise production Railway URL
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:8000'
+  : 'https://your-railway-url.up.railway.app';  // ← Replace after deploying to Railway
 
 let pendingPayment = {
   network: null,
